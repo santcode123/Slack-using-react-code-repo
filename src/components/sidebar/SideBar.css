@@ -1,0 +1,85 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  height: 90vh;
+  background-color: #19171d;
+  /* background-color: #9678d3; */
+  border-right: 1px solid black;
+}
+
+.renderer-button {
+  background-color: transparent;
+  border: 1px;
+  color: #a3a3a6;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px;
+}
+.renderer-text {
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.channels-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.personal-chat-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #d2d2df;
+  background-color: transparent;
+}
+.Sprinklr-logo {
+  border-radius: 25%;
+  margin-bottom: 60px;
+}
+.channel-logo {
+  border-radius: 30%;
+  border: 1px;
+  cursor: pointer;
+}
+
+.create-channel-icon:hover .channel-tooltip {
+  visibility: visible;
+}
+.channel-tooltip {
+  color: white;
+  visibility: hidden;
+  /* width: 80%; */
+  margin-top: 2px;
+  text-align: center;
+  align-self: center;
+}
+
+.channel-arrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.direct-message-arrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.channel-arrow-button {
+  background-color: transparent;
+  border: 1px;
+}
+.direct-message-arrow-button {
+  background-color: transparent;
+  border: 1px;
+}
+.add-teammates {
+  background-color: transparent;
+  border: 1px;
+  color: #d2d2df;
+  cursor: pointer;
+  margin-top: 10px;
+}

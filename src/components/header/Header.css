@@ -1,0 +1,7 @@
+.main-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  color: rgb(219, 210, 199);
+  background-color: black;
+}

@@ -1,0 +1,111 @@
+.chat-box {
+  width: 100%;
+  height: 90vh;
+  background-color: rgb(43, 40, 38);
+  
+   /* background-color:#1a1d21; */
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-y: auto;
+  overflow: hidden;
+}
+.chat-header {
+  height: 6%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(29, 26, 23);
+  color: rgb(218, 226, 233);
+}
+
+.chat-header-title {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 10px;
+}
+
+.chat-header-icon {
+  position: absolute;
+  right: 10px;
+}
+
+.chart-box-form-input {
+  background-color: rgb(68, 83, 104);
+  width: 60%;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid rgb(20, 39, 20);
+  color: aliceblue;
+}
+
+.chat-box-form {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  /* bottom: 1px; */
+  /* background-color: rgb(29, 26, 26); */
+  /* margin-bottom: 5px; */
+}
+.chat-box-message-container{
+  height: 88%;
+ 
+  /* padding: 10px; */
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: black ;
+  scrollbar-width: thin;
+  color: rgb(218, 226, 233);
+}
+.chart-box-form-input{
+ height: 80%;
+}
+
+.chat-box-time-info{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.message-rendered-box{
+  display: flex;
+  width: 100%;
+  /* align-items:flex-start; */
+  margin-left: 2px;
+  margin-bottom: 20px;
+}
+.message-rendered{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.chatbox-userprofile-container{
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+
+}
+
+.message-submit-button{
+  background-color: transparent;
+  border: 1px;
+}
+.username-time-gap{
+  padding-right: 10px;
+  /* margin-: 10px; */
+}
