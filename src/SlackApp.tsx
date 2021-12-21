@@ -11,7 +11,7 @@ import { MessageStreamMapType, channelType, userType, SetIdContextType } from '.
 export const SetIdContext = React.createContext<SetIdContextType>(() => {});
 
 export const SlackApp = (): React.ReactElement => {
-  const [numChannelAndUser, setnumChannelAndUser] = useState(0);
+  const [numChannelAndUser, setnumChannelAndUser] = useState(0); // total number of channels and users
   const [MessageStreamMap, setMessageStreamMap] = useState<MessageStreamMapType>({});
   const [channels, setChannnels] = useState<channelType>({});
   const [users, setUsers] = useState<userType>({});
@@ -28,7 +28,7 @@ export const SlackApp = (): React.ReactElement => {
     },
     [numChannelAndUser]
   );
-  console.log('id :', Id);
+
   return (
     <>
       <Header />

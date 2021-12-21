@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-//style
-import './SideBar.css';
-
 //components
 import { Modal } from '../modal/Modal';
 import { Renderer } from './Renderer';
-import { SprinklrLogo, ArrowUp, ArrowDown, PlusSign } from '../imageContainer/ImageConatiner';
-// import ArrowDown from '../../images/ArrowDown.jpg';
+import { SprinklrLogo, ArrowUp, ArrowDown, PlusSign, CreateNewChannelIcon } from '../imageContainer/ImageConatiner';
+
 //types
 import { handlemainContentType, channelType, userType } from '../../types';
+
+//style
+import './SideBar.css';
 
 export const SideBar = ({
   handleMainContent,
@@ -49,7 +49,7 @@ export const SideBar = ({
         <SprinklrLogo />
         <div className="create-channel-icon">
           <button className="channel-logo" onClick={handleNewChannelOnclick}>
-            <img src={require('../../images/channel.jpg')} width={30} height={30} alt="channel-logo" />
+            <CreateNewChannelIcon />
           </button>
           <div className="channel-tooltip">create a new channel</div>
         </div>

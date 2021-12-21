@@ -1,6 +1,10 @@
 import React from 'react';
-import './Header.css';
+
+//components
 import {UserProfile} from '../imageContainer/ImageConatiner';
+
+//style
+import './Header.css';
 
 export const Header = (): React.ReactElement => {
   return (

@@ -1,5 +1,9 @@
 import React, { useContext } from 'react';
+
+// context
 import { SetIdContext } from '../../SlackApp';
+
+//components
 import { UserProfile1, userProfileCollection } from '../imageContainer/ImageConatiner';
 
 export const Renderer = ({
@@ -15,7 +19,7 @@ export const Renderer = ({
 }): React.ReactElement => {
   const setId = useContext(SetIdContext);
   const handleOnclick = (e: any): void => {
-    // don't know the type of event
+    // don't know the type of event e
     setId(parseInt(e.target.id));
   };
   const ImagePrefix = userProfileCollection[parseInt(id) % 3];

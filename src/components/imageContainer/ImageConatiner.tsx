@@ -11,6 +11,10 @@ const SprinklrLogo = (): React.ReactElement => (
   />
 );
 
+const CreateNewChannelIcon = (): React.ReactElement => (
+  <img src={require('../../images/channel.jpg')} width={30} height={30} alt="channel-logo" />
+);
+
 const ArrowUp = (): React.ReactElement => (
   <img className="Arrow-up" src={require('../../images/ArrowUp.jpg')} width={10} height={10} alt="Arrow-Up" />
 );
@@ -25,16 +29,16 @@ const PlusSign = (): React.ReactElement => (
 
 const UserProfile = (): React.ReactElement => (
   <img
-    className="user-profile"
+    className="user-profile ml-1 mr-1"
     src={require('../../images/UserProfile.png')}
-    width={40}
-    height={40}
+    width={30}
+    height={30}
     alt="user-profile"
   />
 );
 const UserProfile1 = (): React.ReactElement => (
   <img
-    className="user-profile-1"
+    className="user-profile-1 "
     src={require('../../images/UserProfile1.png')}
     width={20}
     height={20}
@@ -83,4 +87,5 @@ export {
   UserProfile2,
   UserProfile3,
   MessageSenderIcon,
+  CreateNewChannelIcon,
 };
