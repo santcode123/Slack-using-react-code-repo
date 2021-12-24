@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ChatBox.css';
 
 // components
@@ -7,39 +7,48 @@ import { ChatBoxFooter } from './ChatBoxFooter';
 import { ChatBoxMessageContainer } from './ChatBoxMessageContainer';
 
 //types
-import { MessageStreamMapType } from '../../types';
+import { ActionType, MessageStreamMapType } from '../../types';
 
 //constants
-import { DEFAULT_USER } from '../../constants';
+import { DEFAULT_USER } from '../../Constants';
 
 export const ChatBox = ({
   id,
   channelName,
-  MessageStreamMap,
-  setMessageStreamMap,
+  messageStreamMap,
   userName,
+  appName,
+  onAction,
 }: {
-  id: number;
-  channelName: string;
-  MessageStreamMap: MessageStreamMapType;
-  setMessageStreamMap: React.Dispatch<React.SetStateAction<MessageStreamMapType>>;
-  userName: string;
+  id: string;
+  channelName?: string;
+  messageStreamMap: MessageStreamMapType;
+  userName?: string;
+  appName?: string;
+  onAction: React.Dispatch<ActionType>;
 }) => {
-  const [MessageStream, setMessageStream] = useState(MessageStreamMap[id] ?? []);
+  const [messageStream, setMessageStream] = useState(messageStreamMap[id] ?? []);
+
+  let disPlayName = channelName ? channelName : userName;
+  disPlayName = appName ? appName : disPlayName;
 
   useEffect(() => {
-    setMessageStream(MessageStreamMap[id] ?? []);
+    setMessageStream(messageStreamMap[id] ?? []);
   }, [id]);
 
   useEffect(() => {
-    setMessageStreamMap((prev: MessageStreamMapType) => ({ ...prev, [id]: MessageStream }));
-  }, [MessageStream]);
+    onAction({ type: 'messageStream', payload: { id: id, messageStream: messageStream } });
+  }, [messageStream]);
+
+  const handleMessageStream = useCallback((value: string) => {
+    setMessageStream((prev: string[]) => [...prev, value]);
+  }, []);
 
   return (
     <div className="chat-box">
-      <ChatBoxHeader channelName={channelName} userName={userName} id={id} />
-      <ChatBoxMessageContainer MessageStream={MessageStream} userName={DEFAULT_USER} />
-      {(userName || channelName) && <ChatBoxFooter setMessageStream={setMessageStream} />}
+      <ChatBoxHeader id={id} disPlayName={disPlayName} showProfile={channelName ? false : true} />
+      <ChatBoxMessageContainer MessageStream={messageStream} userName={DEFAULT_USER} />
+      {disPlayName ? <ChatBoxFooter handleMessageStream={handleMessageStream} disPlayName={disPlayName} /> : null}
     </div>
   );
 };

@@ -5,13 +5,13 @@ export const ChatBoxMessageContainer = ({ MessageStream, userName }: { MessageSt
   const currentDateInfo = new Date().toDateString();
 
   return (
-    <div className="chat-box-message-container">
-      <div className="chat-box-Message-stream">
+    <div className="chat__box__message__container">
+      <div className="chat__box__Message__stream">
         {MessageStream?.map(message => (
           <MessageRenderer message={message} userName={userName} />
         ))}
       </div>
-      <div className="chat-box-time-info">{MessageStream.length ? currentDateInfo : null}</div>
+      <div className="chat__box__time__info">{MessageStream.length ? <div> {currentDateInfo} </div> : null}</div>
     </div>
   );
 };

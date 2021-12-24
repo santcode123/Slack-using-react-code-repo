@@ -1,7 +1,51 @@
-.main-header {
+.header {
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
-  color: rgb(219, 210, 199);
-  background-color: black;
+  justify-content: space-between;
+  padding: 10px 0;
+  background-color: var(--slack-color);
+  color: white;
+}
+
+.header__left {
+  display: flex;
+  flex: 0.3;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 16px;
+  padding-right: 20px;
+}
+
+.header__search {
+  display: flex;
+  flex: 0.4;
+  background-color: rgb(255 255 252 / 20%);
+  text-align: center;
+  padding: 0 50px;
+  color: gray;
+  border: 1px gray solid;
+  border-radius: 6px;
+  justify-content: center;
+}
+.header__search > input {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+.header__right {
+  display: flex;
+  flex: 0.3;
+  justify-content: flex-end;
+  margin-right: 20px;
+  align-items: center;
+}
+.header__right > .MuiSvgIcon-root {
+  padding-right: 10px;
+  font-size: 20px;
+}
+.green__cirlce {
+  color: green;
+  width: 20px !important;
+  height: 20px !important;
 }

@@ -1,85 +1,124 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 10%;
-  height: 90vh;
-  background-color: #19171d;
-  /* background-color: #9678d3; */
+  width: 260px;
+  background-color: var(--slack-color);
   border-right: 1px solid black;
+  height: 100%;
+  overflow-y: auto;
 }
-
-.renderer-button {
-  background-color: transparent;
-  border: 1px;
-  color: #a3a3a6;
-  cursor: pointer;
+.sidebar > hr {
+  border: 1px solid #5b315c;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.sidebar__header {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 10px;
-}
-.renderer-text {
-  padding-left: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.channels-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.personal-chat-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color: #d2d2df;
-  background-color: transparent;
-}
-.Sprinklr-logo {
-  border-radius: 25%;
-  margin-bottom: 60px;
-}
-.channel-logo {
-  border-radius: 30%;
-  border: 1px;
-  cursor: pointer;
-}
-
-.create-channel-icon:hover .channel-tooltip {
-  visibility: visible;
-}
-.channel-tooltip {
   color: white;
-  visibility: hidden;
-  /* width: 80%; */
-  margin-top: 2px;
-  text-align: center;
-  align-self: center;
+  font-size: 12px;
+  align-items: center;
+}
+.sprinklr__logo {
+  display: flex;
+  align-items: center;
+  flex: 0.6;
+  padding-left: 5px;
+}
+.sidebar__header > .MuiSvgIcon-root {
+  font-size: 20px;
+  background-color: white;
+  margin-left: 20px;
+  padding: 5px;
+  border-radius: 999px;
+  color: var(--slack-color);
 }
 
-.channel-arrow {
+.sidebarOption {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  color: white;
   align-items: center;
-}
-.direct-message-arrow {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-.channel-arrow-button {
-  background-color: transparent;
-  border: 1px;
-}
-.direct-message-arrow-button {
-  background-color: transparent;
-  border: 1px;
-}
-.add-teammates {
-  background-color: transparent;
-  border: 1px;
-  color: #d2d2df;
+  font-size: 12px;
+  padding-left: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  height: 30px;
+  width: 100%;
+  position: relative;
+  padding: 2px;
 }
+.sidebarOption:hover {
+  background-color: #4f1852;
+}
+.sidebarOption > h3 {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 20px;
+}
+
+.sidebarOption__icon {
+  padding: 5px;
+  font-size: 15px !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  color: white;
+}
+
+.container :hover {
+  background-color: #4f1852;
+}
+
+.channel__header {
+  display: flex;
+  align-items: center;
+  font-size: 10px !important;
+  justify-content: space-between;
+  align-items: center;
+}
+.message__header {
+  display: flex;
+  align-items: center;
+  font-size: 10px !important;
+}
+.app__header {
+  display: flex;
+  align-items: center;
+  font-size: 10px !important;
+}
+.more__option {
+  font-size: 20px;
+  padding: 5px;
+  margin-left: 10px;
+}
+.add__icon {
+  font-size: 20px;
+  padding: 10px 20px;
+}
+.add__channel > .sidebarOption > .MuiSvgIcon-root {
+  background-color: #5b315c;
+  border-radius: 5px;
+  margin-right: 5px;
+  width: 10px;
+  height: 10px;
+}
+.add__teammate > .sidebarOption > .MuiSvgIcon-root {
+  background-color: #5b315c;
+  border-radius: 5px;
+  margin-right: 5px;
+  width: 10px;
+  height: 10px;
+}
+.add__app > .sidebarOption > .MuiSvgIcon-root {
+  background-color: #5b315c;
+  border-radius: 5px;
+  margin-right: 5px;
+  width: 10px;
+  height: 10px;
+}
+
+/* /.........->/ */

@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
+import SendIcon from '@mui/icons-material/Send';
 
-//components
-import { MessageSenderIcon } from '../imageContainer/ImageConatiner';
-
-export const ChatBoxFooter = ({ setMessageStream }: { setMessageStream: Function }) => {
+export const ChatBoxFooter = ({
+  handleMessageStream,
+  disPlayName,
+}: {
+  handleMessageStream: (value: string) => void;
+  disPlayName: string;
+}) => {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    setMessageStream((prev: Array<string>) => [...(prev ?? []), value]);
+    handleMessageStream(value);
     setValue('');
   };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
   return (
-    <form className="chat-box-form" onSubmit={handleSubmit}>
-      <input className="chart-box-form-input" onChange={handleOnChange} type="text" value={value} />
-      <button type="submit" className="message-submit-button">
-        <MessageSenderIcon />
+    <form className="chat__footer__form" onSubmit={handleSubmit}>
+      <input onChange={handleOnChange} type="text" value={value} placeholder={`Message ${disPlayName}`} />
+      <button type="submit" className="message__submit__button">
+        <SendIcon />
       </button>
     </form>
   );

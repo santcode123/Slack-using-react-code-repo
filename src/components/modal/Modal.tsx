@@ -1,50 +1,65 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
 //types
-import { handlemainContentType } from '../../types';
+import { ActionType } from 'types';
 
 //constants
-import { USER, CHANNEL } from '../../constants';
+import { USER, CHANNEL, APP } from '../../Constants';
 
 export const Modal = ({
-  Close,
-  handleMainContent,
+  close,
+  onAction,
   modalType,
 }: {
-  Close: () => void;
-  handleMainContent: handlemainContentType;
+  close: () => void;
+  onAction: React.Dispatch<ActionType>;
   modalType: string;
 }) => {
   const [value, setValue] = useState<string>('');
 
-  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleOnchange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-  };
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    if (value) {
-      if (modalType === CHANNEL) handleMainContent({ channelName: value, userName: '' });
-      else handleMainContent({ channelName: '', userName: value });
-      Close();
-    } else alert('input field can not empty');
-  };
+  const handleClose = useCallback(() => {
+    close();
+  }, []);
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>): void => {
+      e.preventDefault();
+      if (value) {
+        if (modalType === CHANNEL) {
+          onAction({ type: 'channel', payload: { channelName: value } });
+        }
+        if (modalType === USER) {
+          onAction({ type: 'user', payload: { userName: value } });
+        }
+
+        if (modalType === APP) {
+          onAction({ type: 'app', payload: { appName: value } });
+        }
+
+        close();
+      } else alert('input field can not empty');
+    },
+    [modalType, value, onAction, close]
+  );
 
   return ReactDOM.createPortal(
     <div className="modal">
-      <button className="modal-close" onClick={() => Close()}>
+      <button className="modal__close" onClick={handleClose}>
         X
       </button>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>{modalType === USER ? 'Start a new personal chat' : 'Create a new channel'}</p>
-          <p>{modalType === USER ? 'User Name' : 'Channel Name'}</p>
-          <input type="text" value={value} onChange={handleOnchange} placeholder="enter here..." />
+          <h2>{modalType === USER ? 'Start a new personal chat' : `Create a ${modalType}`}</h2>
+          <p>{modalType} name</p>
         </label>
-        <button type="submit" className="form-submit-button">
-          Submit
+        <input type="text" value={value} onChange={handleOnchange} placeholder={`Enter name of ${modalType}`} />
+        <button type="submit" className="form__submit__button">
+          {`Create ${modalType === 'user' ? 'personal chat' : modalType}`}
         </button>
       </form>
     </div>,

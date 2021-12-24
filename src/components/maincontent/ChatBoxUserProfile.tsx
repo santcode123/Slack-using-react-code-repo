@@ -1,12 +1,25 @@
 import React from 'react';
-import { userProfileCollection } from '../imageContainer/ImageConatiner';
 
-export const ChatBoxUserProfile = ({ userName, id }: { userName: string; id: number }) => {
-  const ProfileImage = userProfileCollection[id % 3];
-  return userName ? (
-    <div className="chatbox-userprofile-container">
-      <ProfileImage />
-      {userName}
+//constants
+import { DEFAULT_HEADER_MESSAGE } from 'Constants';
+
+//types
+import { IconType } from 'types';
+
+export const ChatBoxUserProfile = ({
+  id,
+  Icon,
+  disPlayName,
+}: {
+  id: string;
+  disPlayName?: string;
+  Icon?: IconType;
+}) => {
+  const channelPrefix = disPlayName ? '#' : '';
+  return (
+    <div className="chat_box__user__profile">
+      {Icon ? <Icon /> : channelPrefix}
+      {disPlayName ? disPlayName : <h2>{DEFAULT_HEADER_MESSAGE}</h2>}
     </div>
-  ) : null;
+  );
 };

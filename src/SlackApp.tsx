@@ -1,47 +1,37 @@
-import React, { useState, useCallback } from 'react';
+import { useReducer } from 'react';
 
 //components
-import { Header } from './components/header/Header';
-import { SideBar } from './components/sidebar/SideBar';
-import { ChatBox } from './components/maincontent/ChatBox';
+import { Header } from 'components/header/Header';
+import { SideBar } from 'components/sidebar/SideBar';
+import { ChatBox } from 'components/maincontent/ChatBox';
 
-//types
-import { MessageStreamMapType, channelType, userType, SetIdContextType } from './types';
+//utils
+import reducer from './reducer';
 
-export const SetIdContext = React.createContext<SetIdContextType>(() => {});
+const initialState = {
+  users: {},
+  channels: {},
+  apps: {},
+  messageStreamMap: {},
+};
 
 export const SlackApp = (): React.ReactElement => {
-  const [numChannelAndUser, setnumChannelAndUser] = useState(0); // total number of channels and users
-  const [MessageStreamMap, setMessageStreamMap] = useState<MessageStreamMapType>({});
-  const [channels, setChannnels] = useState<channelType>({});
-  const [users, setUsers] = useState<userType>({});
-  const [Id, setId] = useState(0);
+  const [slackState, dispatch] = useReducer(reducer, initialState);
 
-  const handleMainContent = useCallback(
-    ({ channelName, userName }: { channelName: string; userName: string }) => {
-      setnumChannelAndUser(numChannelAndUser + 1); // new channel or direct chat is created....
-
-      if (channelName) setChannnels((prev: channelType) => ({ ...prev, [numChannelAndUser]: channelName }));
-      if (userName) setUsers((prev: userType) => ({ ...prev, [numChannelAndUser]: userName }));
-
-      setMessageStreamMap((prev: MessageStreamMapType) => ({ ...prev, [numChannelAndUser]: [] }));
-    },
-    [numChannelAndUser]
-  );
+  const id = slackState.id ?? '';
 
   return (
     <>
       <Header />
-      <div className="slack-app m-1">
-        <SetIdContext.Provider value={(id: number) => setId(id)}>
-          <SideBar handleMainContent={handleMainContent} channels={channels} users={users} />
-        </SetIdContext.Provider>
+      <div className="slack__body">
+        <SideBar onAction={dispatch} channels={slackState.channels} users={slackState.users} apps={slackState.apps} />
         <ChatBox
-          id={Id}
-          channelName={channels[Id]}
-          userName={users[Id]}
-          setMessageStreamMap={setMessageStreamMap}
-          MessageStreamMap={MessageStreamMap}
+          id={id}
+          channelName={slackState.channels[id]}
+          userName={slackState.users[id]}
+          appName={slackState.apps[id]}
+          messageStreamMap={slackState.messageStreamMap}
+          onAction={dispatch}
         />
       </div>
     </>

@@ -1,88 +1,143 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 //components
 import { Modal } from '../modal/Modal';
-import { Renderer } from './Renderer';
-import { SprinklrLogo, ArrowUp, ArrowDown, PlusSign, CreateNewChannelIcon } from '../imageContainer/ImageConatiner';
+import { SidebarOption } from './SidebarOption';
+import { userProfileCollection } from 'components/imageContainer/ImageContainer';
+
+// material-ui
+import CreateIcon from '@mui/icons-material/Create';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import AppsIcon from '@mui/icons-material/Apps';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddIcon from '@mui/icons-material/Add';
 
 //types
-import { handlemainContentType, channelType, userType } from '../../types';
+import { ChannelType, UserType, AppsType, ActionType } from 'types';
+
+//constants
+import { THREADS, MENTIONS_AND_REACTIONS, DRAFTS, SAVED_ITEMS, MORE } from 'Constants';
 
 //style
 import './SideBar.css';
 
 export const SideBar = ({
-  handleMainContent,
+  onAction,
   channels,
   users,
+  apps,
 }: {
-  handleMainContent: handlemainContentType;
-  channels: channelType;
-  users: userType;
+  onAction: React.Dispatch<ActionType>;
+  channels: ChannelType;
+  users: UserType;
+  apps: AppsType;
 }): React.ReactElement => {
-  const [isModalOpen, setModalVisibility] = useState({ open: false, type: 'channel' });
-  const [arrowDirection, setarrowDirection] = useState({ channelsDown: true, DirectMessageDown: true });
+  const [modalType, setModalType] = useState('');
+  const [show, setShow] = useState({ channels: true, directMessage: true, app: true });
 
-  const handleNewChannelOnclick = () => {
-    setModalVisibility({ open: true, type: 'channel' });
-  };
+  const handleNewChannelOnclick = useCallback(() => {
+    setModalType('channel');
+  }, []);
 
-  const handleNewUserOnclick = () => {
-    setModalVisibility({ open: true, type: 'user' });
-  };
+  const handleNewUserOnclick = useCallback(() => {
+    setModalType('user');
+  }, []);
 
-  const handleClose = () => {
-    setModalVisibility({ open: false, type: 'channel' });
-  };
+  const handleNewAppOnclick = useCallback(() => {
+    setModalType('app');
+  }, []);
 
-  const handleChannelToggle = () => {
-    setarrowDirection(prev => ({ ...prev, channelsDown: !arrowDirection.channelsDown }));
-  };
+  const handleClose = useCallback(() => {
+    setModalType('');
+  }, []);
 
-  const handleDirectMessageToggle = () => {
-    setarrowDirection(prev => ({ ...prev, DirectMessageDown: !arrowDirection.DirectMessageDown }));
-  };
+  const handleChannelToggle = useCallback(() => {
+    setShow(prev => ({ ...prev, channels: !prev.channels }));
+  }, []);
+
+  const handleDirectMessageToggle = useCallback(() => {
+    setShow(prev => ({ ...prev, directMessage: !prev.directMessage }));
+  }, []);
+
+  const handleAppToggle = useCallback(() => {
+    setShow(prev => ({ ...prev, app: !prev.app }));
+  }, []);
 
   return (
-    <div className="sidebar p-1">
-      <div className="mb-10">
-        <SprinklrLogo />
-        <div className="create-channel-icon">
-          <button className="channel-logo" onClick={handleNewChannelOnclick}>
-            <CreateNewChannelIcon />
-          </button>
-          <div className="channel-tooltip">create a new channel</div>
+    <div className="sidebar">
+      <hr />
+      <div className="sidebar__header">
+        <div className="sprinklr__logo">
+          <h2>Sprinklr</h2>
+          <ExpandMoreIcon />
         </div>
-        {isModalOpen.open ? (
-          <Modal Close={handleClose} handleMainContent={handleMainContent} modalType={isModalOpen.type} />
-        ) : null}
+        <CreateIcon />
+      </div>
+      <hr />
+
+      <div className="container">
+        <SidebarOption Icon={InsertCommentIcon} title="Threads" id={THREADS} />
+        <SidebarOption Icon={AlternateEmailIcon} title="Mentions and reactions" id={MENTIONS_AND_REACTIONS} />
+        <SidebarOption Icon={DraftsIcon} title="Drafts" id={DRAFTS} />
+        <SidebarOption Icon={BookmarkIcon} title="Saved Items" id={SAVED_ITEMS} />
+        <SidebarOption Icon={MoreVertIcon} title="More" id={MORE} />
       </div>
 
-      <div className="channels-container">
-        <div className="channel-arrow">
-          <button className="channel-arrow-button" onClick={handleChannelToggle}>
-            {arrowDirection.channelsDown ? <ArrowDown /> : <ArrowUp />}
-          </button>
-          <label style={{ color: '#a3a3a6' }}>Channels</label>
+      {modalType ? <Modal close={handleClose} onAction={onAction} modalType={modalType} /> : null}
+
+      <div className="container">
+        <div className="channel__header">
+          <div onClick={handleChannelToggle}>{show.channels ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+          <h2>Channels</h2>
+          <MoreVertIcon className="more__option" />
+          <AddIcon className="add__icon" />
         </div>
-        {arrowDirection.channelsDown &&
-          Object.entries(channels).map(data => <Renderer id={data[0]} name={data[1]} isChannel={true} prefix="#" />)}
+        {show.channels
+          ? Object.entries(channels).map(data => <SidebarOption onAction={onAction} id={data[0]} title={data[1]} />)
+          : null}
+        <div className="add__channel" onClick={handleNewChannelOnclick}>
+          <SidebarOption Icon={AddIcon} id="add-channels" title="Add channels" />
+        </div>
       </div>
 
-      <div className="personal-chat-container">
-        <div className="direct-message-arrow">
-          <button className="direct-message-arrow-button" onClick={handleDirectMessageToggle}>
-            {arrowDirection.DirectMessageDown ? <ArrowDown /> : <ArrowUp />}
-          </button>
-          <span>Direct Message</span>
+      <div className="container">
+        <div className="message__header ">
+          <div onClick={handleDirectMessageToggle}>{show.directMessage ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+          <h2>Direct Message</h2>
         </div>
+        {show.directMessage
+          ? Object.entries(users).map(data => (
+              <SidebarOption
+                onAction={onAction}
+                Icon={userProfileCollection[parseInt(data[0].slice(1)) % 3]}
+                id={data[0]}
+                title={data[1]}
+              />
+            ))
+          : null}
+        <div className="add__teammate" onClick={handleNewUserOnclick}>
+          <SidebarOption Icon={AddIcon} id="add-teammate" title="Add teammates" />
+        </div>
+      </div>
 
-        {arrowDirection.DirectMessageDown &&
-          Object.entries(users).map(data => <Renderer id={data[0]} name={data[1]} />)}
-        <button className="add-teammates" onClick={handleNewUserOnclick}>
-          <PlusSign />
-          <span>Add Teammates</span>
-        </button>
+      <div className="container">
+        <div className="app__header">
+          <div onClick={handleAppToggle}>{show.app ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+          <h2>Apps</h2>
+        </div>
+        {show.app
+          ? Object.entries(apps).map(data => (
+              <SidebarOption onAction={onAction} Icon={AppsIcon} id={data[0]} title={data[1]} />
+            ))
+          : null}
+        <div className="add__app" onClick={handleNewAppOnclick}>
+          <SidebarOption Icon={AddIcon} id="add-app" title="Add apps" />
+        </div>
       </div>
     </div>
   );
