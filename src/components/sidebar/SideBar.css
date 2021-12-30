@@ -1,7 +1,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  width: 15%;
   background-color: var(--slack-color);
   border-right: 1px solid black;
   height: 100%;
@@ -22,8 +22,8 @@
 .sprinklr__logo {
   display: flex;
   align-items: center;
-  flex: 0.6;
-  padding-left: 5px;
+  flex: 0.9;
+  padding-left: 12px;
 }
 .sidebar__header > .MuiSvgIcon-root {
   font-size: 20px;
@@ -42,12 +42,25 @@
   padding-left: 5px;
   cursor: pointer;
   height: 30px;
-  width: 100%;
+  width: 95%;
   position: relative;
   padding: 2px;
+  position: relative;
 }
 .sidebarOption:hover {
   background-color: #4f1852;
+}
+.sidebarOption:hover .remove__option {
+  visibility: visible;
+}
+.remove__option:hover {
+  color: rgb(189, 93, 93);
+}
+.sidebarOption > p {
+  padding-left: 5px;
+  position: absolute;
+  visibility: hidden;
+  right: 5px;
 }
 .sidebarOption > h3 {
   max-width: 200px;
@@ -73,22 +86,29 @@
   background-color: #4f1852;
 }
 
-.channel__header {
+.customField__header {
   display: flex;
   align-items: center;
   font-size: 10px !important;
-  justify-content: space-between;
+  position: relative;
+  width: 100%;
   align-items: center;
 }
-.message__header {
-  display: flex;
-  align-items: center;
-  font-size: 10px !important;
+.customField__header > div > .MuiSvgIcon-root {
+  padding-top: 5px;
 }
-.app__header {
+.customField__header__option {
   display: flex;
   align-items: center;
-  font-size: 10px !important;
+  visibility: hidden;
+  position: absolute;
+  right: 1px;
+}
+.customField__header:hover .customField__header__option {
+  visibility: visible;
+}
+.customField__header__option > .MuiSvgIcon-root {
+  font-size: 20px;
 }
 .more__option {
   font-size: 20px;
@@ -98,27 +118,53 @@
 .add__icon {
   font-size: 20px;
   padding: 10px 20px;
+  position: relative;
 }
-.add__channel > .sidebarOption > .MuiSvgIcon-root {
+.add__button > .sidebarOption > .MuiSvgIcon-root {
   background-color: #5b315c;
   border-radius: 5px;
   margin-right: 5px;
   width: 10px;
   height: 10px;
 }
-.add__teammate > .sidebarOption > .MuiSvgIcon-root {
-  background-color: #5b315c;
-  border-radius: 5px;
-  margin-right: 5px;
-  width: 10px;
-  height: 10px;
+.tooltip {
+  position: relative;
 }
-.add__app > .sidebarOption > .MuiSvgIcon-root {
-  background-color: #5b315c;
-  border-radius: 5px;
-  margin-right: 5px;
-  width: 10px;
-  height: 10px;
+
+.tooltip::before,
+.tooltip::after {
+  --scale: 0;
+  --tooltip-color: rgb(187, 12, 12);
+  --arrow-size: 10px;
+  position: absolute;
+  left: 50%;
+  top: -0.45rem;
+  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transition: 150ms transform;
+  transform-origin: bottom center;
+}
+.tooltip::before {
+  --translate-y: calc(-100% - var(--arrow-size));
+  content: attr(data-tooltip);
+  color: white;
+  border-radius: 0.3rem;
+  text-align: center;
+  width: max-content;
+  max-width: 100%;
+  background-color: var(--tooltip-color);
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+  --scale: 1;
+}
+
+.tooltip::after {
+  --translate-y: calc(-1 * var(--arrow-size));
+  content: '';
+  border: var(--arrow-size) solid transparent;
+  border-top-color: var(--tooltip-color);
+  transform-origin: top center;
 }
 
 /* /.........->/ */

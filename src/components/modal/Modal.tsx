@@ -1,12 +1,26 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.css';
 
 //types
 import { ActionType } from 'types';
 
 //constants
-import { USER, CHANNEL, APP } from '../../Constants';
+import { USER } from 'Constants';
+
+//style
+import './Modal.css';
+
+const MODAL_TYPE_NAME_MAP: { [name: string]: string } = {
+  channel: 'Channel',
+  app: 'App',
+  user: 'User',
+};
+
+const MODAL_INPUT_PLACEHOLDER: { [name: string]: string } = {
+  channel: 'Enter a channel name',
+  app: 'Enter app name',
+  user: 'Enter a username',
+};
 
 export const Modal = ({
   close,
@@ -17,7 +31,8 @@ export const Modal = ({
   onAction: React.Dispatch<ActionType>;
   modalType: string;
 }) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>();
+  const overlayRef = useRef(null);
 
   const handleOnchange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
@@ -26,42 +41,54 @@ export const Modal = ({
   const handleClose = useCallback(() => {
     close();
   }, []);
+
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>): void => {
       e.preventDefault();
-      if (value) {
-        if (modalType === CHANNEL) {
-          onAction({ type: 'channel', payload: { channelName: value } });
-        }
-        if (modalType === USER) {
-          onAction({ type: 'user', payload: { userName: value } });
-        }
-
-        if (modalType === APP) {
-          onAction({ type: 'app', payload: { appName: value } });
-        }
-
+      if (value?.trim()) {
+        onAction({
+          type: modalType,
+          payload: { id: new Date().getTime().toString(16), name: value },
+        });
         close();
       } else alert('input field can not empty');
     },
     [modalType, value, onAction, close]
   );
 
+  const handleClick = (e: MouseEvent): void => {
+    if (e.target === overlayRef.current) close();
+  };
+
+  window.addEventListener('click', handleClick);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('click', handleClick);
+    };
+  }, []);
+
   return ReactDOM.createPortal(
-    <div className="modal">
-      <button className="modal__close" onClick={handleClose}>
-        X
-      </button>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <h2>{modalType === USER ? 'Start a new personal chat' : `Create a ${modalType}`}</h2>
-          <p>{modalType} name</p>
-        </label>
-        <input type="text" value={value} onChange={handleOnchange} placeholder={`Enter name of ${modalType}`} />
-        <button type="submit" className="form__submit__button">
-          {`Create ${modalType === 'user' ? 'personal chat' : modalType}`}
-        </button>
-      </form>
+    <div ref={overlayRef} className="overlay">
+      <div className="modal">
+        <div className="modal__header">
+          <label>
+            <h3>{modalType === USER ? 'Start a new personal chat' : `Create a New ${modalType}`}</h3>
+          </label>
+          <button className="modal__close" onClick={handleClose}>
+            X
+          </button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            <p>{MODAL_TYPE_NAME_MAP[modalType]} name</p>
+          </label>
+          <input type="text" value={value} onChange={handleOnchange} placeholder={MODAL_INPUT_PLACEHOLDER[modalType]} />
+          <button type="submit" className="form__submit__button">
+            {`Create ${modalType === 'user' ? 'personal chat' : modalType}`}
+          </button>
+        </form>
+      </div>
     </div>,
     document.getElementById('modal')!
   );

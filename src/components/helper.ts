@@ -1,5 +1,8 @@
 import React from 'react';
 
+//types
+import { MessageStreamType, MessageStreamConfigType } from 'types';
+
 export function getCurrentTime(): string {
   const currentTime = new Date();
 
@@ -9,3 +12,15 @@ export function getCurrentTime(): string {
   const updatedMinute = minute < 10 ? `0${minute}` : `${minute}`;
   return `${updatedHour}:${updatedMinute}`;
 }
+
+const predicate = (obj: MessageStreamType, filterType: string) => obj.type === filterType;
+
+export const objectFilter = (obj: MessageStreamConfigType, filterType: string) =>
+  Object.keys(obj)
+    .filter(key => predicate(obj[key], filterType))
+    .reduce((acc, key) => {
+      return {
+        ...acc,
+        [key]: obj[key],
+      };
+    }, {});

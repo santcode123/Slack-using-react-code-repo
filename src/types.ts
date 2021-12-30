@@ -1,47 +1,54 @@
 import OverridableComponent from '@mui/styled-engine-sc';
 import SvgIconTypeMap from '@mui/styled-engine-sc';
 
-export interface MessageStreamMapType {
-  [id: string]: string[] | undefined;
+//constants
+import { ACTION_TYPE } from 'Constants';
+import React from 'react';
+
+export type IconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+  muiName: string;
+};
+
+export type MessageStreamType = {
+  type: ACTION_TYPE;
+  name?: string;
+  messageStreamData: string[];
+  Icon?: (() => React.ReactElement) | IconType;
+};
+
+export interface MessageStreamConfigType {
+  [id: string]: MessageStreamType;
 }
 
 export interface ChannelType {
-  [id: string]: string | undefined;
+  [id: string]: MessageStreamType;
 }
 
 export interface UserType {
-  [id: string]: string | undefined;
+  [id: string]: MessageStreamType;
 }
 
-export interface AppsType {
-  [id: string]: string | undefined;
-}
-
-enum ActionKind {
-  CHANNEL = 'channel',
-  USER = 'user',
-  APP = 'app',
+export interface AppType {
+  [id: string]: MessageStreamType;
 }
 
 export type StateType = {
   id?: string;
-  users: UserType;
-  channels: ChannelType;
-  apps: AppsType;
-  messageStreamMap: MessageStreamMapType;
+  messageStreamConfig: MessageStreamConfigType;
 };
 
 export type ActionType = {
   type: string;
   payload: {
-    id?: string;
-    userName?: string;
-    channelName?: string;
-    appName?: string;
-    messageStream?: string[];
+    id: string;
+    name?: string;
+    messageStreamData?: string[];
   };
 };
 
-export type IconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-  muiName: string;
+export type CustomType = 'app' | 'channel' | 'user';
+
+export type CustomFieldType = {
+  type: CustomType;
+  customField: ChannelType | UserType | AppType;
 };

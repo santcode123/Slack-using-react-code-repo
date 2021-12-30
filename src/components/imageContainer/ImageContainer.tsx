@@ -5,8 +5,8 @@ const UserProfile = (): React.ReactElement => (
   <img
     className="user-profile ml-1 mr-1"
     src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
-    width={25}
-    height={25}
+    width={45}
+    height={45}
     alt="user-profile"
   />
 );
@@ -40,6 +40,6 @@ const UserProfile3 = (): React.ReactElement => (
   />
 );
 
-export const userProfileCollection = [UserProfile1, UserProfile2, UserProfile3];
+export const USER_PROFILE_COLLECTION = [UserProfile1, UserProfile2, UserProfile3];
 
-export { UserProfile, UserProfile1, UserProfile2, UserProfile3 };
+export { UserProfile };

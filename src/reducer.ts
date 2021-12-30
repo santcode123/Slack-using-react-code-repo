@@ -1,61 +1,100 @@
 import { Reducer } from 'react';
+
+//types
 import { StateType, ActionType } from 'types';
 
+//material-ui
+import AppsIcon from '@mui/icons-material/Apps';
+
+//constants
+import { ACTION_TYPE } from 'Constants';
+import { USER_PROFILE_COLLECTION } from 'components/imageContainer/ImageContainer';
+
 const reducer: Reducer<StateType, ActionType> = (state, action) => {
-  const numChannels = Object.keys(state.channels).length;
-  const numUsers = Object.keys(state.users).length;
-  const numApps = Object.keys(state.apps).length;
+  const payloadId = action.payload.id;
 
   switch (action.type) {
-    case 'channel': {
+    case ACTION_TYPE.CHANNEL: {
       return {
         ...state,
-        id: 'c' + (numChannels + 1),
-        channels: { ...state.channels, ['c' + (numChannels + 1)]: action.payload.channelName },
-        messageStreamMap: { ...state.messageStreamMap, ['c' + (numChannels + 1)]: [] },
+        id: payloadId,
+        messageStreamConfig: {
+          ...state.messageStreamConfig,
+          [payloadId]: {
+            type: action.type,
+            name: action.payload.name,
+            messageStreamData: [],
+          },
+        },
       };
     }
-    case 'user': {
+    case ACTION_TYPE.USER: {
       return {
         ...state,
-        id: 'u' + (numUsers + 1),
-        users: { ...state.users, ['u' + (numUsers + 1)]: action.payload.userName },
-        messageStreamMap: { ...state.messageStreamMap, ['u' + (numUsers + 1)]: [] },
-      };
-    }
-
-    case 'app': {
-      return {
-        ...state,
-        id: 'a' + (numApps + 1),
-        apps: { ...state.apps, ['a' + (numApps + 1)]: action.payload.appName },
-        messageStreamMap: { ...state.messageStreamMap, ['a' + (numApps + 1)]: [] },
-      };
-    }
-
-    case 'click': {
-      return {
-        ...state,
-        id: action.payload.id,
+        id: payloadId,
+        messageStreamConfig: {
+          ...state.messageStreamConfig,
+          [payloadId]: {
+            type: action.type,
+            name: action.payload.name,
+            messageStreamData: [],
+            Icon: USER_PROFILE_COLLECTION[Math.floor(Math.random() * 10) % 3],
+          },
+        },
       };
     }
 
-    case 'messageStream': {
+    case ACTION_TYPE.APP: {
       return {
         ...state,
-        messageStreamMap: { ...state.messageStreamMap, [action.payload.id ?? '']: action.payload.messageStream },
+        id: payloadId,
+        messageStreamConfig: {
+          ...state.messageStreamConfig,
+          [payloadId]: { type: action.type, name: action.payload.name, messageStreamData: [], Icon: AppsIcon },
+        },
+      };
+    }
+
+    case ACTION_TYPE.CLICK: {
+      return {
+        ...state,
+        id: payloadId,
+      };
+    }
+
+    case ACTION_TYPE.MESSAGE_STREAM: {
+      return {
+        ...state,
+        id: payloadId,
+        messageStreamConfig: {
+          ...state.messageStreamConfig,
+          [payloadId]: {
+            type: state.messageStreamConfig[payloadId].type,
+            name: action.payload.name,
+            messageStreamData: action.payload.messageStreamData ?? [],
+          },
+        },
+      };
+    }
+
+    case ACTION_TYPE.REMOVE: {
+      const filteredMessageStreamConfig = Object.keys(state.messageStreamConfig)
+        .filter(key => key !== payloadId)
+        .reduce((acc, key) => {
+          return {
+            ...acc,
+            [key]: state.messageStreamConfig[key],
+          };
+        }, {});
+
+      return {
+        id: '',
+        messageStreamConfig: filteredMessageStreamConfig,
       };
     }
 
     default: {
-      return {
-        ...state,
-        id: '',
-        channels: state.channels,
-        apps: state.apps,
-        users: state.users,
-        messageStreamMap: state.messageStreamMap,
-      };
+      return state;
     }
   }
 };

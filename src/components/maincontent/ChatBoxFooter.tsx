@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 
+//types
+import { ActionType } from 'types';
+
 export const ChatBoxFooter = ({
   handleMessageStream,
   disPlayName,
@@ -12,7 +15,7 @@ export const ChatBoxFooter = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleMessageStream(value);
+    if (value.trim()) handleMessageStream(value);
     setValue('');
   };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

@@ -3,11 +3,12 @@ body {
   padding: 0;
   background-color: rgb(26, 29, 33);
   text-align: center;
-  --slack-color:#350d36;
+  --slack-color: #350d36;
   overflow: hidden;
   font-family: 'Slack-Lato,appleLogo';
+  line-height: 22px;
 }
-.mt-1{
+.mt-1 {
   margin-top: 10px;
 }
 .ml-1 {
@@ -17,20 +18,20 @@ body {
 .mr-1 {
   margin-right: 10px;
 }
-.mr-2{
+.mr-2 {
   margin-right: 20px;
 }
 .mb-10 {
   margin-bottom: 100px;
 }
 .m-1 {
-margin: 10px;
+  margin: 10px;
 }
-.p-1{
+.p-1 {
   padding: 10px;
 }
 
-.slack__body{
+.slack__body {
   display: flex;
   flex-direction: row;
   height: 95vh;

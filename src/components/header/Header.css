@@ -26,6 +26,7 @@
   border: 1px gray solid;
   border-radius: 6px;
   justify-content: center;
+  align-items: center;
 }
 .header__search > input {
   background-color: transparent;

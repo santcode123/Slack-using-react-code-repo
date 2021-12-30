@@ -2,34 +2,31 @@ import React from 'react';
 
 // components
 import { ChatBoxUserProfile } from './ChatBoxUserProfile';
-import AppsIcon from '@mui/icons-material/Apps';
-import { userProfileCollection } from 'components/imageContainer/ImageContainer';
+
+//types
+import { IconType } from 'types';
 
 export const ChatBoxHeader = ({
-  id,
   disPlayName,
-  showProfile,
+  Icon,
 }: {
-  id: string;
   disPlayName?: string;
-  showProfile: boolean;
+  Icon?: React.ReactElement | IconType;
 }) => {
-  const Icon = id.includes('a') ? AppsIcon : userProfileCollection[parseInt(id.slice(1)) % 3];
-
-  const headerTitle = <ChatBoxUserProfile id={id} disPlayName={disPlayName} Icon={showProfile ? Icon : null} />;
+  const headerTitle = <ChatBoxUserProfile disPlayName={disPlayName} Icon={Icon} />;
 
   return (
-    <div className="chat-header">
-      <div className="chat-header-title">{headerTitle}</div>
-      {showProfile === false ? (
+    <div className="chat_header">
+      <div className="chat_header_title">{headerTitle}</div>
+      {Icon || !disPlayName ? null : (
         <img
-          className="chat-header-icon"
+          className="chat__header__icon"
           src="https://image.shutterstock.com/image-vector/add-user-male-line-icon-260nw-751010065.jpg"
           alt="add user"
           width={30}
           height={30}
         />
-      ) : null}
+      )}
     </div>
   );
 };

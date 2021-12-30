@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 //components
 import { Modal } from '../modal/Modal';
 import { SidebarOption } from './SidebarOption';
-import { userProfileCollection } from 'components/imageContainer/ImageContainer';
+import { CustomFieldContainer } from './CustomFieldContainer';
 
 // material-ui
 import CreateIcon from '@mui/icons-material/Create';
@@ -11,17 +11,14 @@ import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import AppsIcon from '@mui/icons-material/Apps';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddIcon from '@mui/icons-material/Add';
 
 //types
-import { ChannelType, UserType, AppsType, ActionType } from 'types';
+import { ChannelType, UserType, AppType, ActionType, CustomFieldType, CustomType } from 'types';
 
 //constants
-import { THREADS, MENTIONS_AND_REACTIONS, DRAFTS, SAVED_ITEMS, MORE } from 'Constants';
+import { THREADS, MENTIONS_AND_REACTIONS, DRAFTS, SAVED_ITEMS, MORE, CHANNEL, USER, APP } from 'Constants';
 
 //style
 import './SideBar.css';
@@ -35,38 +32,28 @@ export const SideBar = ({
   onAction: React.Dispatch<ActionType>;
   channels: ChannelType;
   users: UserType;
-  apps: AppsType;
+  apps: AppType;
 }): React.ReactElement => {
-  const [modalType, setModalType] = useState('');
-  const [show, setShow] = useState({ channels: true, directMessage: true, app: true });
+  const [modalType, setModalType] = useState<string | undefined>();
+  const [showItems, toggleShowItems] = useState({ channel: true, user: true, app: true });
 
-  const handleNewChannelOnclick = useCallback(() => {
-    setModalType('channel');
-  }, []);
-
-  const handleNewUserOnclick = useCallback(() => {
-    setModalType('user');
-  }, []);
-
-  const handleNewAppOnclick = useCallback(() => {
-    setModalType('app');
+  const handleAddOnclick = useCallback((modalType: string) => {
+    setModalType(modalType);
   }, []);
 
   const handleClose = useCallback(() => {
-    setModalType('');
+    setModalType(undefined);
   }, []);
 
-  const handleChannelToggle = useCallback(() => {
-    setShow(prev => ({ ...prev, channels: !prev.channels }));
+  const handleToggle = useCallback((type: CustomType) => {
+    toggleShowItems(prev => ({ ...prev, [type]: !prev[type] }));
   }, []);
 
-  const handleDirectMessageToggle = useCallback(() => {
-    setShow(prev => ({ ...prev, directMessage: !prev.directMessage }));
-  }, []);
-
-  const handleAppToggle = useCallback(() => {
-    setShow(prev => ({ ...prev, app: !prev.app }));
-  }, []);
+  const customFields: Array<CustomFieldType> = [
+    { type: CHANNEL, customField: channels },
+    { type: USER, customField: users },
+    { type: APP, customField: apps },
+  ];
 
   return (
     <div className="sidebar">
@@ -90,55 +77,18 @@ export const SideBar = ({
 
       {modalType ? <Modal close={handleClose} onAction={onAction} modalType={modalType} /> : null}
 
-      <div className="container">
-        <div className="channel__header">
-          <div onClick={handleChannelToggle}>{show.channels ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
-          <h2>Channels</h2>
-          <MoreVertIcon className="more__option" />
-          <AddIcon className="add__icon" />
-        </div>
-        {show.channels
-          ? Object.entries(channels).map(data => <SidebarOption onAction={onAction} id={data[0]} title={data[1]} />)
-          : null}
-        <div className="add__channel" onClick={handleNewChannelOnclick}>
-          <SidebarOption Icon={AddIcon} id="add-channels" title="Add channels" />
-        </div>
-      </div>
-
-      <div className="container">
-        <div className="message__header ">
-          <div onClick={handleDirectMessageToggle}>{show.directMessage ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
-          <h2>Direct Message</h2>
-        </div>
-        {show.directMessage
-          ? Object.entries(users).map(data => (
-              <SidebarOption
-                onAction={onAction}
-                Icon={userProfileCollection[parseInt(data[0].slice(1)) % 3]}
-                id={data[0]}
-                title={data[1]}
-              />
-            ))
-          : null}
-        <div className="add__teammate" onClick={handleNewUserOnclick}>
-          <SidebarOption Icon={AddIcon} id="add-teammate" title="Add teammates" />
-        </div>
-      </div>
-
-      <div className="container">
-        <div className="app__header">
-          <div onClick={handleAppToggle}>{show.app ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
-          <h2>Apps</h2>
-        </div>
-        {show.app
-          ? Object.entries(apps).map(data => (
-              <SidebarOption onAction={onAction} Icon={AppsIcon} id={data[0]} title={data[1]} />
-            ))
-          : null}
-        <div className="add__app" onClick={handleNewAppOnclick}>
-          <SidebarOption Icon={AddIcon} id="add-app" title="Add apps" />
-        </div>
-      </div>
+      {customFields.map(customInfo => (
+        <CustomFieldContainer
+          show={showItems}
+          handleToggle={handleToggle}
+          type={customInfo.type}
+          customFields={customInfo.customField}
+          onAction={onAction}
+          onClick={handleAddOnclick}
+          className="ml-1"
+          overrides={{ removeOption: 'remove__option' }}
+        />
+      ))}
     </div>
   );
 };
