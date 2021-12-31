@@ -72,6 +72,7 @@ const reducer: Reducer<StateType, ActionType> = (state, action) => {
             type: state.messageStreamConfig[payloadId].type,
             name: action.payload.name,
             messageStreamData: action.payload.messageStreamData ?? [],
+            Icon: state.messageStreamConfig[payloadId].Icon,
           },
         },
       };
