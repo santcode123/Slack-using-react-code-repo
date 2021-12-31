@@ -1,11 +1,15 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+//components
+import { ModalHeader } from './ModalHeader';
+import { ModalFooter } from './ModalFooter';
+
 //types
 import { ActionType } from 'types';
 
 //constants
-import { USER } from 'Constants';
+import { ACTION_TYPE } from 'Constants';
 
 //style
 import './Modal.css';
@@ -29,7 +33,7 @@ export const Modal = ({
 }: {
   close: () => void;
   onAction: React.Dispatch<ActionType>;
-  modalType: string;
+  modalType: typeof ACTION_TYPE.USER | typeof ACTION_TYPE.CHANNEL | typeof ACTION_TYPE.APP;
 }) => {
   const [value, setValue] = useState<string>();
   const overlayRef = useRef(null);
@@ -38,12 +42,8 @@ export const Modal = ({
     setValue(e.target.value);
   }, []);
 
-  const handleClose = useCallback(() => {
-    close();
-  }, []);
-
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>): void => {
+    (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
       e.preventDefault();
       if (value?.trim()) {
         onAction({
@@ -56,38 +56,28 @@ export const Modal = ({
     [modalType, value, onAction, close]
   );
 
-  const handleClick = (e: MouseEvent): void => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     if (e.target === overlayRef.current) close();
   };
 
-  window.addEventListener('click', handleClick);
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener('click', handleClick);
-    };
-  }, []);
-
   return ReactDOM.createPortal(
-    <div ref={overlayRef} className="overlay">
+    <div ref={overlayRef} className="overlay" onClick={handleClick}>
       <div className="modal">
-        <div className="modal__header">
-          <label>
-            <h3>{modalType === USER ? 'Start a new personal chat' : `Create a New ${modalType}`}</h3>
-          </label>
-          <button className="modal__close" onClick={handleClose}>
-            X
-          </button>
+        <ModalHeader close={close} modalType={modalType} />
+        <div className="modal__body">
+          <form onSubmit={handleSubmit}>
+            <label>
+              <p>{MODAL_TYPE_NAME_MAP[modalType]} name</p>
+            </label>
+            <input
+              type="text"
+              value={value}
+              onChange={handleOnchange}
+              placeholder={MODAL_INPUT_PLACEHOLDER[modalType]}
+            />
+          </form>
         </div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>{MODAL_TYPE_NAME_MAP[modalType]} name</p>
-          </label>
-          <input type="text" value={value} onChange={handleOnchange} placeholder={MODAL_INPUT_PLACEHOLDER[modalType]} />
-          <button type="submit" className="form__submit__button">
-            {`Create ${modalType === 'user' ? 'personal chat' : modalType}`}
-          </button>
-        </form>
+        <ModalFooter modalType={modalType} handleSubmit={handleSubmit} />
       </div>
     </div>,
     document.getElementById('modal')!

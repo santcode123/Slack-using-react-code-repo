@@ -142,7 +142,12 @@
 
 .message__submit__button {
   background-color: transparent;
-  border: 1px;
+  border: none;
+  width: max-content;
+}
+.message__submit__button:hover {
+  color: rgb(134, 58, 96);
+  cursor: pointer;
 }
 .username__time__gap {
   padding-left: 12px;

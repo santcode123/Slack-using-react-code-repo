@@ -4,15 +4,15 @@ import React from 'react';
 import './ChatBox.css';
 
 // components
-import { ChatBoxHeader } from './ChatBoxHeader';
-import { ChatBoxFooter } from './ChatBoxFooter';
-import { ChatBoxMessageContainer } from './ChatBoxMessageContainer';
+import { ChatBoxHeader } from './ChatBoxHeader/ChatBoxHeader';
+import { ChatBoxFooter } from './ChatBoxFooter/ChatBoxFooter';
+import { ChatBoxMessageContainer } from './ChatBoxMessageContainer/ChatBoxMessageContainer';
 
 //types
 import { ActionType, MessageStreamType } from '../../types';
 
 //constants
-import { DEFAULT_USER } from '../../Constants';
+import { DEFAULT_USER, ACTION_TYPE } from '../../Constants';
 
 export const ChatBox = ({
   id,
@@ -29,7 +29,7 @@ export const ChatBox = ({
 }) => {
   const handleMessageStream = (value: string) => {
     onAction({
-      type: 'messageStream',
+      type: ACTION_TYPE.MESSAGE_STREAM,
       payload: { id: id, name: displayName, messageStreamData: [...messageStreamConfig.messageStreamData, value] },
     });
   };

@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
 
 //components
 import { Header } from 'components/header/Header';

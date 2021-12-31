@@ -1,7 +1,8 @@
 import React from 'react';
 
 // components
-import { ChatBoxUserProfile } from './ChatBoxUserProfile';
+import { ChatBoxUserProfile } from '../ChatBoxUserProfile';
+import { ChatBoxHeaderRight } from './ChatBoxHeaderRight';
 
 //types
 import { IconType } from 'types';
@@ -18,15 +19,7 @@ export const ChatBoxHeader = ({
   return (
     <div className="chat_header">
       <div className="chat_header_title">{headerTitle}</div>
-      {Icon || !disPlayName ? null : (
-        <img
-          className="chat__header__icon"
-          src="https://image.shutterstock.com/image-vector/add-user-male-line-icon-260nw-751010065.jpg"
-          alt="add user"
-          width={30}
-          height={30}
-        />
-      )}
+      {Icon || !disPlayName ? null : <ChatBoxHeaderRight />}
     </div>
   );
 };

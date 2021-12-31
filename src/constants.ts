@@ -1,3 +1,10 @@
+// material-ui
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 export const USER = 'user';
 export const CHANNEL = 'channel';
 export const APP = 'app';
@@ -19,3 +26,11 @@ export enum ACTION_TYPE {
   MESSAGE_STREAM = 'messageStream',
   REMOVE = 'remove',
 }
+
+export const SIDEBAR_FIXED_ICONS = [
+  { id: THREADS, Icon: InsertCommentIcon, title: 'Threads' },
+  { id: MENTIONS_AND_REACTIONS, Icon: AlternateEmailIcon, title: 'Mentions and reactions' },
+  { id: SAVED_ITEMS, Icon: BookmarkIcon, title: 'Saved Items' },
+  { id: DRAFTS, Icon: DraftsIcon, title: 'Drafts' },
+  { id: MORE, Icon: MoreVertIcon, title: 'More' },
+];

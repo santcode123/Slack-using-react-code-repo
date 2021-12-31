@@ -3,6 +3,9 @@ import React from 'react';
 //types
 import { ActionType, IconType } from '../../types';
 
+//constants
+import { ACTION_TYPE } from 'Constants';
+
 export const SidebarOption = ({
   onAction,
   Icon,
@@ -20,14 +23,14 @@ export const SidebarOption = ({
 }): React.ReactElement => {
   const handleOnclick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     onAction?.({
-      type: 'click',
+      type: ACTION_TYPE.CLICK,
       payload: { id: id },
     });
   };
 
   const handleRemove = () => {
     onAction?.({
-      type: 'remove',
+      type: ACTION_TYPE.REMOVE,
       payload: { id: id },
     });
   };

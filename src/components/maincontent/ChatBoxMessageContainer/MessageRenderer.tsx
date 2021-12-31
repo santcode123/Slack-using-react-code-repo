@@ -1,7 +1,7 @@
 import React from 'react';
 
 //component
-import { UserProfile } from '../imageContainer/ImageContainer';
+import { UserProfile } from '../../imageContainer/ImageContainer';
 
 //helper
 import { getCurrentTime } from 'components/helper';
