@@ -1,8 +1,8 @@
 import React from 'react';
 
 // components
-import { ChatBoxUserProfile } from '../ChatBoxUserProfile';
-import { ChatBoxHeaderRight } from './ChatBoxHeaderRight';
+import { ChatBoxUserProfile } from 'components/maincontent/ChatBoxUserProfile';
+import { ChatBoxHeaderRight } from 'components/maincontent/ChatBoxHeader/ChatBoxHeaderRight';
 
 //types
 import { IconType } from 'types';

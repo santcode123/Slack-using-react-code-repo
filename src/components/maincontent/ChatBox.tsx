@@ -4,9 +4,9 @@ import React from 'react';
 import './ChatBox.css';
 
 // components
-import { ChatBoxHeader } from './ChatBoxHeader/ChatBoxHeader';
+import { ChatBoxHeader } from 'components/maincontent/ChatBoxHeader';
 import { ChatBoxFooter } from './ChatBoxFooter/ChatBoxFooter';
-import { ChatBoxMessageContainer } from './ChatBoxMessageContainer/ChatBoxMessageContainer';
+import { ChatBoxMessageContainer } from 'components/maincontent/ChatBoxMessageContainer';
 
 //types
 import { ActionType, MessageStreamType } from '../../types';
