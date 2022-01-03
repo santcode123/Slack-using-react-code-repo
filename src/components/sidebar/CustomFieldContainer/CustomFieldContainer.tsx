@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 //components
 import { SidebarOption } from '../SidebarOption';
 import { CustomFieldHeader } from './CustomFieldHeader';

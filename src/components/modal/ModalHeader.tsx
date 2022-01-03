@@ -9,7 +9,7 @@ const MODAL_HEADER_TITLE: { [name: string]: string } = {
 export const ModalHeader = ({ modalType, close }: { modalType: string; close: () => void }): React.ReactElement => {
   const handleClose = useCallback(() => {
     close();
-  }, []);
+  }, [close]);
 
   return (
     <div className="modal__header">

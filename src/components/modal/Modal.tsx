@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 //components
@@ -6,7 +6,7 @@ import { ModalHeader } from './ModalHeader';
 import { ModalFooter } from './ModalFooter';
 
 //types
-import { ActionType } from 'types';
+import { ActionType, CustomType } from 'types';
 
 //constants
 import { ACTION_TYPE } from 'Constants';
@@ -15,9 +15,9 @@ import { ACTION_TYPE } from 'Constants';
 import './Modal.css';
 
 const MODAL_TYPE_NAME_MAP: { [name: string]: string } = {
-  channel: 'Channel',
-  app: 'App',
-  user: 'User',
+  channel: 'Channel name',
+  app: 'App name',
+  user: 'User name',
 };
 
 const MODAL_INPUT_PLACEHOLDER: { [name: string]: string } = {
@@ -33,7 +33,7 @@ export const Modal = ({
 }: {
   close: () => void;
   onAction: React.Dispatch<ActionType>;
-  modalType: typeof ACTION_TYPE.USER | typeof ACTION_TYPE.CHANNEL | typeof ACTION_TYPE.APP;
+  modalType: CustomType;
 }) => {
   const [value, setValue] = useState<string>();
   const overlayRef = useRef(null);
@@ -67,7 +67,7 @@ export const Modal = ({
         <div className="modal__body">
           <form onSubmit={handleSubmit}>
             <label>
-              <p>{MODAL_TYPE_NAME_MAP[modalType]} name</p>
+              <p>{MODAL_TYPE_NAME_MAP[modalType]}</p>
             </label>
             <input
               type="text"
