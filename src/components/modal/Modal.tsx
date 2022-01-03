@@ -9,7 +9,7 @@ import { ModalFooter } from './ModalFooter';
 import { ActionType, CustomType } from 'types';
 
 //constants
-import { ACTION_TYPE } from 'Constants';
+import { ACTION_TYPE } from '../../constants';
 
 //style
 import './Modal.css';

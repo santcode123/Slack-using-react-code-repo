@@ -12,7 +12,7 @@ import { ChatBoxMessageContainer } from 'components/maincontent/ChatBoxMessageCo
 import { ActionType, MessageStreamType } from '../../types';
 
 //constants
-import { DEFAULT_USER, ACTION_TYPE } from '../../Constants';
+import { DEFAULT_USER, ACTION_TYPE } from '../../constants';
 
 export const ChatBox = ({
   id,

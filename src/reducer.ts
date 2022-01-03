@@ -7,7 +7,7 @@ import { StateType, ActionType } from 'types';
 import AppsIcon from '@mui/icons-material/Apps';
 
 //constants
-import { ACTION_TYPE } from 'Constants';
+import { ACTION_TYPE } from './constants';
 import { USER_PROFILE_COLLECTION } from 'components/imageContainer/ImageContainer';
 
 const reducer: Reducer<StateType, ActionType> = (state, action) => {

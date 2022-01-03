@@ -2,7 +2,7 @@ import OverridableComponent from '@mui/styled-engine-sc';
 import SvgIconTypeMap from '@mui/styled-engine-sc';
 
 //constants
-import { ACTION_TYPE } from 'Constants';
+import { ACTION_TYPE } from './constants';
 import React from 'react';
 
 export type IconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {

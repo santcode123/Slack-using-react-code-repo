@@ -6,7 +6,7 @@ import { SideBar } from 'components/sidebar/SideBar';
 import { ChatBox } from 'components/maincontent/ChatBox';
 
 //constants
-import { CHANNEL, APP, USER } from 'Constants';
+import { CHANNEL, APP, USER } from './constants';
 
 //helper
 import { objectFilter } from 'components/helper';

@@ -4,7 +4,7 @@ import React from 'react';
 import { ActionType, IconType } from '../../types';
 
 //constants
-import { ACTION_TYPE } from 'Constants';
+import { ACTION_TYPE } from '../../constants';
 
 export const SidebarOption = ({
   onAction,

@@ -1,7 +1,7 @@
 import React from 'react';
 
 //constants
-import { DEFAULT_HEADER_MESSAGE } from 'Constants';
+import { DEFAULT_HEADER_MESSAGE } from '../../constants';
 
 //types
 import { IconType } from 'types';

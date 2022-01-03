@@ -10,7 +10,7 @@ import { SideBarHeader } from './SideBarHeader';
 import { ChannelType, UserType, AppType, ActionType, CustomFieldType, CustomType } from 'types';
 
 //constants
-import { SIDEBAR_FIXED_ICONS, ACTION_TYPE } from 'Constants';
+import { SIDEBAR_FIXED_ICONS, ACTION_TYPE } from '../../constants';
 
 //style
 import './SideBar.css';
