@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 //components
 import { Modal } from '../modal/Modal';
 import { SidebarOption } from './SidebarOption';
-import { CustomFieldContainer } from './CustomFieldContainer/CustomFieldContainer';
+import { CustomFieldContainer } from './customFieldContainer/CustomFieldContainer';
 import { SideBarHeader } from './SideBarHeader';
 
 //types
