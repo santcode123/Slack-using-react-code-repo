@@ -6,10 +6,7 @@ import { ModalHeader } from './ModalHeader';
 import { ModalFooter } from './ModalFooter';
 
 //types
-import { ActionType, CustomType } from 'types';
-
-//constants
-import { ACTION_TYPE } from '../../constants';
+import { ActionType, CustomType, ACTION_TYPE, ModalAndToggleAction } from 'types';
 
 //style
 import './Modal.css';
@@ -27,12 +24,10 @@ const MODAL_INPUT_PLACEHOLDER: { [name: string]: string } = {
 };
 
 export const Modal = ({
-  close,
   onAction,
   modalType,
 }: {
-  close: () => void;
-  onAction: React.Dispatch<ActionType>;
+  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
   modalType: CustomType;
 }) => {
   const [value, setValue] = useState<string>();
@@ -42,6 +37,13 @@ export const Modal = ({
     setValue(e.target.value);
   }, []);
 
+  const handleClose = useCallback(() => {
+    onAction({
+      type: ACTION_TYPE.MODAL_ACTION,
+      payload: { type: undefined },
+    });
+  }, [onAction]);
+
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
       e.preventDefault();
@@ -50,20 +52,22 @@ export const Modal = ({
           type: modalType,
           payload: { id: new Date().getTime().toString(16), name: value },
         });
-        close();
+        handleClose();
       } else alert('input field can not empty');
     },
-    [modalType, value, onAction, close]
+    [modalType, value, onAction, handleClose]
   );
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    if (e.target === overlayRef.current) close();
+    if (e.target === overlayRef.current) {
+      handleClose();
+    }
   };
 
   return ReactDOM.createPortal(
     <div ref={overlayRef} className="overlay" onClick={handleClick}>
       <div className="modal">
-        <ModalHeader close={close} modalType={modalType} />
+        <ModalHeader close={handleClose} modalType={modalType} />
         <div className="modal__body">
           <form onSubmit={handleSubmit}>
             <label>

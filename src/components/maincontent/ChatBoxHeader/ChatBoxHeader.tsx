@@ -2,7 +2,7 @@ import React from 'react';
 
 // components
 import { ChatBoxUserProfile } from 'components/maincontent/ChatBoxUserProfile';
-import { ChatBoxHeaderRight } from 'components/maincontent/ChatBoxHeader/ChatBoxHeaderRight';
+import { ChatBoxHeaderRight } from 'components/maincontent/chatBoxHeader/ChatBoxHeaderRight';
 
 //types
 import { IconType } from 'types';
