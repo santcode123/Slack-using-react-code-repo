@@ -4,33 +4,30 @@ import { CustomFieldHeader } from './CustomFieldHeader';
 import { CustomFieldFooter } from './CustomFieldFooter';
 
 //types
-import { ChannelType, UserType, AppType, ActionType, CustomType } from 'types';
+import { ChannelType, UserType, AppType, ActionType, CustomType, ModalAndToggleAction } from 'types';
 
 export const CustomFieldContainer = ({
-  show,
-  handleToggle,
+  visibleItems,
   customFields,
   onAction,
-  onClick,
   containerType,
   className,
   overrides,
 }: {
-  show: { channel: boolean; user: boolean; app: boolean };
-  handleToggle: (containerType: CustomType) => void;
+  visibleItems: { channel: boolean; user: boolean; app: boolean };
   customFields: ChannelType | UserType | AppType;
-  onAction: React.Dispatch<ActionType>;
-  onClick: (modalType: CustomType) => void;
+  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
   containerType: CustomType;
   className?: string;
   overrides?: { removeOption?: string };
 }) => {
   return (
     <div className="container">
-      <CustomFieldHeader containerType={containerType} show={show} handleToggle={handleToggle} />
-      {show[containerType]
+      <CustomFieldHeader headerType={containerType} visibleItems={visibleItems} onAction={onAction} />
+      {visibleItems[containerType]
         ? Object.entries(customFields).map(data => (
             <SidebarOption
+              key={data[0]}
               onAction={onAction}
               id={data[0]}
               title={data[1]?.name}
@@ -40,7 +37,7 @@ export const CustomFieldContainer = ({
             />
           ))
         : null}
-      <CustomFieldFooter containerType={containerType} onClick={onClick} />
+      <CustomFieldFooter footerType={containerType} onAction={onAction} />
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { StateType, ActionType } from 'types';
 import AppsIcon from '@mui/icons-material/Apps';
 
 //constants
-import { ACTION_TYPE } from './constants';
+import { ACTION_TYPE } from 'types';
 import { USER_PROFILE_COLLECTION } from 'components/imageContainer/ImageContainer';
 
 const reducer: Reducer<StateType, ActionType> = (state, action) => {
@@ -62,7 +62,7 @@ const reducer: Reducer<StateType, ActionType> = (state, action) => {
       };
     }
 
-    case ACTION_TYPE.MESSAGE_STREAM: {
+    case ACTION_TYPE.SEND_MESSAGE: {
       return {
         ...state,
         id: payloadId,

@@ -1,5 +1,3 @@
-import React from 'react';
-
 // material-ui
 import CreateIcon from '@mui/icons-material/Create';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

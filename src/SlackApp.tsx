@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 
 //components
 import { Header } from 'components/header/Header';
@@ -9,7 +9,7 @@ import { ChatBox } from 'components/maincontent/ChatBox';
 import { CHANNEL, APP, USER } from './constants';
 
 //helper
-import { objectFilter } from 'components/helper';
+import { objectFilter } from 'helper';
 
 //utils
 import reducer from './reducer';
@@ -35,7 +35,6 @@ export const SlackApp = (): React.ReactElement => {
         <ChatBox
           id={id}
           displayName={slackState.messageStreamConfig[id]?.name ?? ''}
-          type={slackState.messageStreamConfig[id]?.type}
           messageStreamConfig={slackState.messageStreamConfig[id] ?? {}}
           onAction={dispatch}
         />

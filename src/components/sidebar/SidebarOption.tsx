@@ -1,10 +1,7 @@
 import React from 'react';
 
 //types
-import { ActionType, IconType } from '../../types';
-
-//constants
-import { ACTION_TYPE } from '../../constants';
+import { ActionType, IconType, ACTION_TYPE } from 'types';
 
 export const SidebarOption = ({
   onAction,
@@ -21,7 +18,7 @@ export const SidebarOption = ({
   className?: string;
   overrides?: { removeOption?: string };
 }): React.ReactElement => {
-  const handleOnclick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     onAction?.({
       type: ACTION_TYPE.CLICK,
       payload: { id: id },
@@ -35,7 +32,7 @@ export const SidebarOption = ({
     });
   };
   return (
-    <div className={`sidebarOption ${className}`} onClick={handleOnclick} key={id}>
+    <div className={`sidebarOption ${className}`} onClick={handleClick} key={id}>
       {Icon ? (
         <>
           <Icon className="sidebarOption__icon" />

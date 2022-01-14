@@ -7,22 +7,27 @@ import AddIcon from '@mui/icons-material/Add';
 import { SidebarOption } from 'components/sidebar/SidebarOption';
 
 //types
-import { CustomType } from 'types';
+import { CustomType, ActionType, ModalAndToggleAction, ACTION_TYPE } from 'types';
 
 export const CustomFieldFooter = ({
-  containerType,
-  onClick,
+  footerType,
+  onAction,
 }: {
-  containerType: CustomType;
-  onClick: (modalType: CustomType) => void;
+  footerType: CustomType;
+  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
 }): React.ReactElement => {
-  const handleOnClick = useCallback(() => {
-    onClick(containerType);
-  }, [containerType, onClick]);
+  const handleClick = useCallback(() => {
+    onAction({
+      type: ACTION_TYPE.MODAL_ACTION,
+      payload: {
+        type: footerType,
+      },
+    });
+  }, [footerType, onAction]);
 
   return (
-    <div className="add__button" onClick={handleOnClick}>
-      <SidebarOption Icon={AddIcon} id={`add-${containerType}-button`} title={`Add ${containerType}s`} />
+    <div className="add__button" onClick={handleClick}>
+      <SidebarOption Icon={AddIcon} id={`add-${footerType}-button`} title={`Add ${footerType}s`} />
     </div>
   );
 };
