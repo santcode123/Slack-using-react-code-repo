@@ -1,5 +1,3 @@
-import React from 'react';
-
 //components
 import { HeaderLeft } from './HeaderLeft';
 import { HeaderRight } from './HeaderRight';

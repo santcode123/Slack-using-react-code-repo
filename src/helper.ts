@@ -1,5 +1,3 @@
-import React from 'react';
-
 //types
 import { MessageStreamType, MessageStreamConfigType } from 'types';
 
@@ -24,3 +22,7 @@ export const objectFilter = (obj: MessageStreamConfigType, filterType: string) =
         [key]: obj[key],
       };
     }, {});
+
+// getMessageData function add the id to each message
+export const getMessageData = (messageStreamData: string[]): Array<{ id: string; message: string }> =>
+  messageStreamData.map((message, index) => ({ id: index.toString(), message: message }));

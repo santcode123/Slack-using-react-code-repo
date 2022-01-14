@@ -1,5 +1,3 @@
-import React from 'react';
-
 //material-ui
 import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import Badge from '@mui/material/Badge';
@@ -12,19 +10,17 @@ export const HeaderRight = () => {
     <div className="header__right">
       <HelpOutlineIcon />
       <Tooltip title="Santosh" arrow>
-        {
-          <Badge
-            overlap="circular"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            badgeContent={<FiberManualRecordSharpIcon className="green__cirlce" />}
-          >
-            <Avatar
-              alt="user-profile"
-              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
-              sx={{ width: 30, height: 30 }}
-            />
-          </Badge>
-        }
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          badgeContent={<FiberManualRecordSharpIcon className="green__cirlce" />}
+        >
+          <Avatar
+            alt="user-profile"
+            src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
+            sx={{ width: 30, height: 30 }}
+          />
+        </Badge>
       </Tooltip>
     </div>
   );

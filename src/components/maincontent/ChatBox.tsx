@@ -1,43 +1,45 @@
-import React from 'react';
-
 //styles
 import './ChatBox.css';
 
 // components
-import { ChatBoxHeader } from 'components/maincontent/ChatBoxHeader';
+import { ChatBoxHeader } from 'components/maincontent/ChatBoxHeader/ChatBoxHeader';
 import { ChatBoxFooter } from './ChatBoxFooter/ChatBoxFooter';
-import { ChatBoxMessageContainer } from 'components/maincontent/ChatBoxMessageContainer';
+import { ChatBoxMessageContainer } from 'components/maincontent/ChatBoxMessageContainer/ChatBoxMessageContainer';
 
 //types
-import { ActionType, MessageStreamType } from '../../types';
+import { ActionType, MessageStreamType, ACTION_TYPE } from 'types';
 
 //constants
-import { DEFAULT_USER, ACTION_TYPE } from '../../constants';
+import { DEFAULT_USER } from '../../constants';
+
+//helper
+import { getMessageData } from 'helper';
 
 export const ChatBox = ({
   id,
   displayName,
-  type,
   messageStreamConfig,
   onAction,
 }: {
   id: string;
   displayName: string;
   messageStreamConfig: MessageStreamType;
-  type: string;
   onAction: React.Dispatch<ActionType>;
 }) => {
-  const handleMessageStream = (value: string) => {
+  const sendMessageStream = (value: string) => {
     onAction({
-      type: ACTION_TYPE.MESSAGE_STREAM,
+      type: ACTION_TYPE.SEND_MESSAGE,
       payload: { id: id, name: displayName, messageStreamData: [...messageStreamConfig.messageStreamData, value] },
     });
   };
   return (
     <div className="chat-box">
       <ChatBoxHeader disPlayName={displayName} Icon={messageStreamConfig.Icon} />
-      <ChatBoxMessageContainer messageStream={messageStreamConfig.messageStreamData ?? []} userName={DEFAULT_USER} />
-      {displayName ? <ChatBoxFooter handleMessageStream={handleMessageStream} disPlayName={displayName} /> : null}
+      <ChatBoxMessageContainer
+        messageStream={getMessageData(messageStreamConfig.messageStreamData)}
+        userName={DEFAULT_USER}
+      />
+      {displayName ? <ChatBoxFooter sendMessageStream={sendMessageStream} disPlayName={displayName} /> : null}
     </div>
   );
 };

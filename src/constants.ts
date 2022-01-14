@@ -18,15 +18,6 @@ export const SAVED_ITEMS = 'Saved items';
 export const MORE = 'More';
 export const DEFAULT_HEADER_MESSAGE = 'please select any channel,personal chat or app to start conversation';
 
-export enum ACTION_TYPE {
-  CHANNEL = 'channel',
-  USER = 'user',
-  APP = 'app',
-  CLICK = 'click',
-  MESSAGE_STREAM = 'messageStream',
-  REMOVE = 'remove',
-}
-
 export const SIDEBAR_FIXED_ICONS = [
   { id: THREADS, Icon: InsertCommentIcon, title: 'Threads' },
   { id: MENTIONS_AND_REACTIONS, Icon: AlternateEmailIcon, title: 'Mentions and reactions' },

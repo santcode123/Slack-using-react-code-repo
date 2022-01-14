@@ -4,7 +4,7 @@ import React from 'react';
 import { UserProfile } from 'components/imageContainer/ImageContainer';
 
 //helper
-import { getCurrentTime } from 'components/helper';
+import { getCurrentTime } from 'helper';
 import { MessageOption } from 'components/MessageOption';
 
 export const MessageRenderer = ({ message, userName }: { message: string; userName: string }): React.ReactElement => {

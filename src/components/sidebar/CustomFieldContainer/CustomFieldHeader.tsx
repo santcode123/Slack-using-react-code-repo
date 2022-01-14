@@ -8,8 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 
 //types
-import { CustomType } from 'types';
-import { CustomFieldFooter } from './CustomFieldFooter';
+import { CustomType, ActionType, ModalAndToggleAction, ACTION_TYPE } from 'types';
 
 const CUSTOM_FIELD_HEADER_TITLE = {
   channel: 'Channels',
@@ -18,27 +17,32 @@ const CUSTOM_FIELD_HEADER_TITLE = {
 };
 
 export const CustomFieldHeader = ({
-  containerType,
-  show,
-  handleToggle,
+  headerType,
+  visibleItems,
+  onAction,
 }: {
-  containerType: CustomType;
-  show: { channel: boolean; user: boolean; app: boolean };
-  handleToggle: (containerType: CustomType) => void;
+  headerType: CustomType;
+  visibleItems: { channel: boolean; user: boolean; app: boolean };
+  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
 }): React.ReactElement => {
-  const handleToggleButton = useCallback(() => {
-    handleToggle(containerType);
-  }, [containerType, handleToggle]);
+  const handleToggle = useCallback(() => {
+    onAction({
+      type: ACTION_TYPE.TOGGLE_ACTION,
+      payload: {
+        type: headerType,
+      },
+    });
+  }, [headerType, onAction]);
 
   return (
     <div className="customField__header">
-      <div onClick={handleToggleButton}>{show[containerType] ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
-      <h2>{CUSTOM_FIELD_HEADER_TITLE[containerType]}</h2>
+      <div onClick={handleToggle}>{visibleItems[headerType] ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+      <h2>{CUSTOM_FIELD_HEADER_TITLE[headerType]}</h2>
       <div className="customField__header__option">
         <Tooltip title="Section options" arrow>
           <MoreVertIcon className="more__option" />
         </Tooltip>
-        <Tooltip title={`Add ${containerType}`} arrow>
+        <Tooltip title={`Add ${headerType}`} arrow>
           <AddIcon className="add__icon" />
         </Tooltip>
       </div>
