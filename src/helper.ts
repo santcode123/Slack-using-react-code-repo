@@ -23,6 +23,5 @@ export const objectFilter = (obj: MessageStreamConfigType, filterType: string) =
       };
     }, {});
 
-// getMessageData function add the id to each message
 export const getMessageData = (messageStreamData: string[]): Array<{ id: string; message: string }> =>
   messageStreamData.map((message, index) => ({ id: index.toString(), message: message }));

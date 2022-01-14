@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 
-//types
-import { ActionType } from 'types';
-
 export const ChatBoxFooter = ({
   sendMessageStream,
   disPlayName,

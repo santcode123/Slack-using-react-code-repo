@@ -2,9 +2,9 @@
 import './ChatBox.css';
 
 // components
-import { ChatBoxHeader } from 'components/maincontent/ChatBoxHeader/ChatBoxHeader';
-import { ChatBoxFooter } from './ChatBoxFooter/ChatBoxFooter';
-import { ChatBoxMessageContainer } from 'components/maincontent/ChatBoxMessageContainer/ChatBoxMessageContainer';
+import { ChatBoxHeader } from 'components/maincontent/chatBoxHeader/ChatBoxHeader';
+import { ChatBoxFooter } from './chatBoxFooter/ChatBoxFooter';
+import { ChatBoxMessageContainer } from 'components/maincontent/chatBoxMessageContainer/ChatBoxMessageContainer';
 
 //types
 import { ActionType, MessageStreamType, ACTION_TYPE } from 'types';
@@ -36,7 +36,7 @@ export const ChatBox = ({
     <div className="chat-box">
       <ChatBoxHeader disPlayName={displayName} Icon={messageStreamConfig.Icon} />
       <ChatBoxMessageContainer
-        messageStream={getMessageData(messageStreamConfig.messageStreamData)}
+        messageStream={getMessageData(messageStreamConfig.messageStreamData ?? [])}
         userName={DEFAULT_USER}
       />
       {displayName ? <ChatBoxFooter sendMessageStream={sendMessageStream} disPlayName={displayName} /> : null}
