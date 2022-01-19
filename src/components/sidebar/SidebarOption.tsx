@@ -1,7 +1,5 @@
-import React from 'react';
-
 //types
-import { ActionType, IconType, ACTION_TYPE } from 'types';
+import { BaseActions, ModalAndToggleAction, IconType, ALL_ACTIONS } from 'types';
 
 export const SidebarOption = ({
   onAction,
@@ -11,7 +9,7 @@ export const SidebarOption = ({
   className,
   overrides,
 }: {
-  onAction?: React.Dispatch<ActionType>;
+  onAction?: React.Dispatch<BaseActions | ModalAndToggleAction>;
   Icon?: IconType;
   title?: string;
   id: string;
@@ -20,19 +18,20 @@ export const SidebarOption = ({
 }): React.ReactElement => {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     onAction?.({
-      type: ACTION_TYPE.CLICK,
+      type: ALL_ACTIONS.SELECT_OPTION,
       payload: { id: id },
     });
   };
 
-  const handleRemove = () => {
+  const handleRemove = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+    e.stopPropagation();
     onAction?.({
-      type: ACTION_TYPE.REMOVE,
+      type: ALL_ACTIONS.REMOVE,
       payload: { id: id },
     });
   };
   return (
-    <div className={`sidebarOption ${className}`} onClick={handleClick} key={id}>
+    <div className={`sidebarOption ${className}`} onClick={handleClick}>
       {Icon ? (
         <>
           <Icon className="sidebarOption__icon" />

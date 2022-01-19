@@ -1,4 +1,4 @@
-// material-ui
+// material-ui components
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import DraftsIcon from '@mui/icons-material/Drafts';

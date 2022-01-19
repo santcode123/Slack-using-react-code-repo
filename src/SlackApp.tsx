@@ -1,9 +1,9 @@
-import { useReducer } from 'react';
+import { useReducer, useMemo } from 'react';
 
 //components
 import { Header } from 'components/header/Header';
 import { SideBar } from 'components/sidebar/SideBar';
-import { ChatBox } from 'components/maincontent/ChatBox';
+import { ChatBox } from 'components/chatBox/ChatBox';
 
 //constants
 import { CHANNEL, APP, USER } from './constants';
@@ -23,9 +23,12 @@ export const SlackApp = (): React.ReactElement => {
   const [slackState, dispatch] = useReducer(reducer, initialState);
 
   const id = slackState.id ?? '';
-  const channels = objectFilter(slackState.messageStreamConfig, CHANNEL);
-  const apps = objectFilter(slackState.messageStreamConfig, APP);
-  const users = objectFilter(slackState.messageStreamConfig, USER);
+  const channels = useMemo(
+    () => objectFilter(slackState.messageStreamConfig, CHANNEL),
+    [slackState.messageStreamConfig]
+  );
+  const apps = useMemo(() => objectFilter(slackState.messageStreamConfig, APP), [slackState.messageStreamConfig]);
+  const users = useMemo(() => objectFilter(slackState.messageStreamConfig, USER), [slackState.messageStreamConfig]);
 
   return (
     <>

@@ -9,13 +9,13 @@ export const ModalFooter = ({
   modalType,
   handleSubmit,
 }: {
-  modalType: string;
+  modalType?: string;
   handleSubmit: (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }): React.ReactElement => {
   return (
     <div className="modal__footer">
       <button type="submit" className="form__submit__button" onClick={handleSubmit}>
-        {MODAL_SUBMIT_BUTTON_TEXT[modalType]}
+        {MODAL_SUBMIT_BUTTON_TEXT[modalType ?? '']}
       </button>
     </div>
   );

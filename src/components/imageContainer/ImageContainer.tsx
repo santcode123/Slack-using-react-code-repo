@@ -1,5 +1,3 @@
-import React from 'react';
-
 //style
 import './ImageContainer.css';
 

@@ -1,11 +1,14 @@
+import { useMemo } from 'react';
 //material-ui
 import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
+import React from 'react';
 
-export const HeaderRight = () => {
+export const HeaderRight = (): React.ReactElement => {
+  const avatarSize = useMemo(() => ({ width: 30, height: 30 }), []);
   return (
     <div className="header__right">
       <HelpOutlineIcon />
@@ -13,12 +16,12 @@ export const HeaderRight = () => {
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={<FiberManualRecordSharpIcon className="green__cirlce" />}
+          badgeContent={<FiberManualRecordSharpIcon className="green__circle" />}
         >
           <Avatar
             alt="user-profile"
             src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
-            sx={{ width: 30, height: 30 }}
+            sx={avatarSize}
           />
         </Badge>
       </Tooltip>

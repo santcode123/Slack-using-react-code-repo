@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 //material-ui
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 
 //types
-import { CustomType, ActionType, ModalAndToggleAction, ACTION_TYPE } from 'types';
+import { CustomType, BaseActions, ModalAndToggleAction, ALL_ACTIONS } from 'types';
 
 const CUSTOM_FIELD_HEADER_TITLE = {
   channel: 'Channels',
@@ -22,21 +22,21 @@ export const CustomFieldHeader = ({
   onAction,
 }: {
   headerType: CustomType;
-  visibleItems: { channel: boolean; user: boolean; app: boolean };
-  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
+  visibleItems: boolean;
+  onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
 }): React.ReactElement => {
   const handleToggle = useCallback(() => {
     onAction({
-      type: ACTION_TYPE.TOGGLE_ACTION,
+      type: ALL_ACTIONS.TOGGLE_ACTION,
       payload: {
-        type: headerType,
+        toggleType: headerType,
       },
     });
   }, [headerType, onAction]);
 
   return (
     <div className="customField__header">
-      <div onClick={handleToggle}>{visibleItems[headerType] ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+      <div onClick={handleToggle}>{visibleItems ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
       <h2>{CUSTOM_FIELD_HEADER_TITLE[headerType]}</h2>
       <div className="customField__header__option">
         <Tooltip title="Section options" arrow>

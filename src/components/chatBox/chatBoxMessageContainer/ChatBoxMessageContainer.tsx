@@ -1,7 +1,5 @@
-import React from 'react';
-
 //components
-import { MessageRenderer } from '../MessageRenderer';
+import { MessageRenderer } from './MessageRenderer';
 
 export const ChatBoxMessageContainer = ({
   messageStream,

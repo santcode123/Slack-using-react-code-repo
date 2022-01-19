@@ -6,7 +6,7 @@ const MODAL_HEADER_TITLE: { [name: string]: string } = {
   app: 'Create a new app',
 };
 
-export const ModalHeader = ({ modalType, close }: { modalType: string; close: () => void }): React.ReactElement => {
+export const ModalHeader = ({ modalType, close }: { modalType?: string; close: () => void }): React.ReactElement => {
   const handleClose = useCallback(() => {
     close();
   }, [close]);
@@ -14,7 +14,7 @@ export const ModalHeader = ({ modalType, close }: { modalType: string; close: ()
   return (
     <div className="modal__header">
       <label>
-        <h3>{MODAL_HEADER_TITLE[modalType]}</h3>
+        <h3>{MODAL_HEADER_TITLE[modalType ?? '']}</h3>
       </label>
       <button className="modal__close" onClick={handleClose}>
         X

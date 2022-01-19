@@ -7,19 +7,10 @@ import { CustomFieldContainer } from './customFieldContainer/CustomFieldContaine
 import { SideBarHeader } from './SideBarHeader';
 
 //types
-import {
-  ChannelType,
-  UserType,
-  AppType,
-  ActionType,
-  CustomFieldType,
-  CustomType,
-  ACTION_TYPE,
-  ModalAndToggleAction,
-} from 'types';
+import { ChannelType, UserType, AppType, BaseActions, CustomFieldType, ALL_ACTIONS, ModalAndToggleAction } from 'types';
 
 //constants
-import { SIDEBAR_FIXED_ICONS } from '../../constants';
+import { SIDEBAR_FIXED_ICONS, CHANNEL, USER, APP } from '../../constants';
 
 //style
 import './SideBar.css';
@@ -30,28 +21,27 @@ export const SideBar = ({
   users,
   apps,
 }: {
-  onAction: React.Dispatch<ActionType>;
+  onAction: React.Dispatch<BaseActions>;
   channels: ChannelType;
   users: UserType;
   apps: AppType;
 }): React.ReactElement => {
-  const [modalType, setModalType] = useState<CustomType | undefined>();
+  const [modalType, setModalType] = useState<string>();
   const [visibleItems, toggleVisibleItems] = useState({ channel: true, user: true, app: true });
 
   const _onAction = useCallback(
-    (action: ActionType | ModalAndToggleAction) => {
+    (action: BaseActions | ModalAndToggleAction) => {
       switch (action.type) {
-        case ACTION_TYPE.MODAL_ACTION: {
-          setModalType(action.payload.type); // modal type is sent through payload.type
+        case ALL_ACTIONS.MODAL_ACTION: {
+          setModalType(action.payload.modalType);
           break;
         }
-        case ACTION_TYPE.TOGGLE_ACTION: {
-          toggleVisibleItems(prev => ({ ...prev, [action.payload.type!]: !prev[action.payload.type!] }));
-          // payload.type shows which item to toggle like channel, app or user
+        case ALL_ACTIONS.TOGGLE_ACTION: {
+          toggleVisibleItems(prev => ({ ...prev, [action.payload.toggleType!]: !prev[action.payload.toggleType!] }));
           break;
         }
         default: {
-          onAction(action as ActionType);
+          onAction(action as BaseActions);
         }
       }
     },
@@ -59,9 +49,9 @@ export const SideBar = ({
   );
 
   const customFields: Array<CustomFieldType> = [
-    { id: 1, type: ACTION_TYPE.CHANNEL, customField: channels },
-    { id: 2, type: ACTION_TYPE.USER, customField: users },
-    { id: 3, type: ACTION_TYPE.APP, customField: apps },
+    { id: 1, type: CHANNEL, customField: channels },
+    { id: 2, type: USER, customField: users },
+    { id: 3, type: APP, customField: apps },
   ];
 
   return (
@@ -78,7 +68,7 @@ export const SideBar = ({
       {customFields.map(customInfo => (
         <CustomFieldContainer
           key={customInfo.id}
-          visibleItems={visibleItems}
+          visibleItems={visibleItems[customInfo.type]}
           containerType={customInfo.type}
           customFields={customInfo.customField}
           onAction={_onAction}
