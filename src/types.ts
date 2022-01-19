@@ -2,15 +2,18 @@
 import OverridableComponent from '@mui/styled-engine-sc';
 import SvgIconTypeMap from '@mui/styled-engine-sc';
 
+//constants
+import { APP, CHANNEL, USER } from './constants';
+
 export type IconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
   muiName: string;
 };
 
-export enum ACTION_TYPE {
-  CHANNEL = 'channel',
-  USER = 'user',
-  APP = 'app',
-  CLICK = 'click',
+export enum ALL_ACTIONS {
+  CREATE_CHANNEL = 'createChannel',
+  CREATE_USER = 'createUser',
+  CREATE_APP = 'createApp',
+  SELECT_OPTION = 'selectOption',
   SEND_MESSAGE = 'sendMessage',
   REMOVE = 'remove',
   MODAL_ACTION = 'modalAction',
@@ -18,7 +21,7 @@ export enum ACTION_TYPE {
 }
 
 export type MessageStreamType = {
-  type: ACTION_TYPE;
+  ConfigType: string;
   name?: string;
   messageStreamData: string[];
   Icon?: (() => React.ReactElement) | IconType;
@@ -27,6 +30,10 @@ export type MessageStreamType = {
 export interface MessageStreamConfigType {
   [id: string]: MessageStreamType;
 }
+export type ReducerStateType = {
+  id?: string;
+  messageStreamConfig: MessageStreamConfigType;
+};
 
 export interface ChannelType {
   [id: string]: MessageStreamType;
@@ -40,24 +47,22 @@ export interface AppType {
   [id: string]: MessageStreamType;
 }
 
-export type StateType = {
-  id?: string;
-  messageStreamConfig: MessageStreamConfigType;
-};
-
 type CreateAction = {
-  type: typeof ACTION_TYPE.APP | ACTION_TYPE.USER | ACTION_TYPE.CHANNEL;
+  type: typeof ALL_ACTIONS.CREATE_APP | ALL_ACTIONS.CREATE_CHANNEL | ALL_ACTIONS.CREATE_USER;
   payload: { id: string; name: string };
 };
-type ClickAndRemoveAction = { type: typeof ACTION_TYPE.CLICK | typeof ACTION_TYPE.REMOVE; payload: { id: string } };
+type SelectAndRemoveAction = {
+  type: typeof ALL_ACTIONS.SELECT_OPTION | ALL_ACTIONS.REMOVE;
+  payload: { id: string };
+};
 type MessageStreamAction = {
-  type: typeof ACTION_TYPE.SEND_MESSAGE;
-  payload: { id: string; name: string; messageStreamData: string[] };
+  type: typeof ALL_ACTIONS.SEND_MESSAGE;
+  payload: { id: string; messageStreamData: string[] };
 };
 
-export type ActionType = CreateAction | ClickAndRemoveAction | MessageStreamAction;
+export type BaseActions = CreateAction | SelectAndRemoveAction | MessageStreamAction;
 
-export type CustomType = typeof ACTION_TYPE.APP | ACTION_TYPE.USER | ACTION_TYPE.CHANNEL;
+export type CustomType = typeof CHANNEL | typeof APP | typeof USER;
 
 export type CustomFieldType = {
   id: number;
@@ -67,5 +72,5 @@ export type CustomFieldType = {
 
 export type ModalAndToggleAction = {
   type: string;
-  payload: { type: CustomType | undefined };
+  payload: { modalType?: CustomType; toggleType?: CustomType };
 };

@@ -1,5 +1,3 @@
-import React from 'react';
-
 //component
 import { UserProfile } from 'components/imageContainer/ImageContainer';
 

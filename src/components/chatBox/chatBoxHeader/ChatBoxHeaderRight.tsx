@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ChatBoxHeaderRight = (): React.ReactElement => {
   return (
     <img

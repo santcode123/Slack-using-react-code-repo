@@ -1,4 +1,4 @@
-// material-ui
+// material-ui components
 import CreateIcon from '@mui/icons-material/Create';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 

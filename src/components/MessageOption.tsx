@@ -1,6 +1,4 @@
-import React from 'react';
-
-//material-ui
+//material-ui components
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';

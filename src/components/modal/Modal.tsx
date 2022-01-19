@@ -6,7 +6,10 @@ import { ModalHeader } from './ModalHeader';
 import { ModalFooter } from './ModalFooter';
 
 //types
-import { ActionType, CustomType, ACTION_TYPE, ModalAndToggleAction } from 'types';
+import { BaseActions, ALL_ACTIONS, ModalAndToggleAction } from 'types';
+
+//helper
+import { getActionType } from 'helper';
 
 //style
 import './Modal.css';
@@ -27,20 +30,20 @@ export const Modal = ({
   onAction,
   modalType,
 }: {
-  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
-  modalType: CustomType;
+  onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
+  modalType?: string;
 }) => {
   const [value, setValue] = useState<string>();
   const overlayRef = useRef(null);
 
-  const handleOnchange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChanges = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   }, []);
 
   const handleClose = useCallback(() => {
     onAction({
-      type: ACTION_TYPE.MODAL_ACTION,
-      payload: { type: undefined },
+      type: ALL_ACTIONS.MODAL_ACTION,
+      payload: { modalType: undefined },
     });
   }, [onAction]);
 
@@ -49,7 +52,7 @@ export const Modal = ({
       e.preventDefault();
       if (value?.trim()) {
         onAction({
-          type: modalType,
+          type: getActionType(modalType),
           payload: { id: new Date().getTime().toString(16), name: value },
         });
         handleClose();
@@ -71,13 +74,13 @@ export const Modal = ({
         <div className="modal__body">
           <form onSubmit={handleSubmit}>
             <label>
-              <p>{MODAL_TYPE_NAME_MAP[modalType]}</p>
+              <p>{MODAL_TYPE_NAME_MAP[modalType ?? '']}</p>
             </label>
             <input
               type="text"
               value={value}
-              onChange={handleOnchange}
-              placeholder={MODAL_INPUT_PLACEHOLDER[modalType]}
+              onChange={handleChanges}
+              placeholder={MODAL_INPUT_PLACEHOLDER[modalType ?? '']}
             />
           </form>
         </div>

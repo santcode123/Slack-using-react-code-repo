@@ -1,7 +1,7 @@
 //components
 import { HeaderLeft } from './HeaderLeft';
-import { HeaderRight } from './HeaderRight';
 import { HeaderMiddle } from './HeaderMiddle';
+import { HeaderRight } from './HeaderRight';
 
 //style
 import './Header.css';

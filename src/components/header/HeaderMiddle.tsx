@@ -1,7 +1,4 @@
-import React from 'react';
-
 //material-ui components
-
 import SearchIcon from '@mui/icons-material/Search';
 
 export const HeaderMiddle = (): React.ReactElement => {

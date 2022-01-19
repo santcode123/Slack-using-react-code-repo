@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 // material-ui
 import AddIcon from '@mui/icons-material/Add';
@@ -7,20 +7,20 @@ import AddIcon from '@mui/icons-material/Add';
 import { SidebarOption } from 'components/sidebar/SidebarOption';
 
 //types
-import { CustomType, ActionType, ModalAndToggleAction, ACTION_TYPE } from 'types';
+import { CustomType, BaseActions, ModalAndToggleAction, ALL_ACTIONS } from 'types';
 
 export const CustomFieldFooter = ({
   footerType,
   onAction,
 }: {
   footerType: CustomType;
-  onAction: React.Dispatch<ActionType | ModalAndToggleAction>;
+  onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
 }): React.ReactElement => {
   const handleClick = useCallback(() => {
     onAction({
-      type: ACTION_TYPE.MODAL_ACTION,
+      type: ALL_ACTIONS.MODAL_ACTION,
       payload: {
-        type: footerType,
+        modalType: footerType,
       },
     });
   }, [footerType, onAction]);
