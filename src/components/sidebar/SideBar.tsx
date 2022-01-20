@@ -7,10 +7,11 @@ import { CustomFieldContainer } from './customFieldContainer/CustomFieldContaine
 import { SideBarHeader } from './SideBarHeader';
 
 //types
-import { ChannelType, UserType, AppType, BaseActions, CustomFieldType, ALL_ACTIONS, ModalAndToggleAction } from 'types';
+import { ChannelType, UserType, AppType, BaseActions, CustomFieldType, ModalAndToggleAction } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 //constants
-import { SIDEBAR_FIXED_ICONS, CHANNEL, USER, APP } from '../../constants';
+import { SIDEBAR_FIXED_ICONS, CHANNEL, USER, APP, MODAL_TYPES } from '../../constants';
 
 //style
 import './SideBar.css';
@@ -26,17 +27,17 @@ export const SideBar = ({
   users: UserType;
   apps: AppType;
 }): React.ReactElement => {
-  const [modalType, setModalType] = useState<string>();
+  const [modalType, setModalType] = useState<typeof MODAL_TYPES[keyof typeof MODAL_TYPES]>();
   const [visibleItems, toggleVisibleItems] = useState({ channel: true, user: true, app: true });
 
   const _onAction = useCallback(
     (action: BaseActions | ModalAndToggleAction) => {
       switch (action.type) {
-        case ALL_ACTIONS.MODAL_ACTION: {
+        case ACTION_TYPES.MODAL_ACTION: {
           setModalType(action.payload.modalType);
           break;
         }
-        case ALL_ACTIONS.TOGGLE_ACTION: {
+        case ACTION_TYPES.TOGGLE_ACTION: {
           toggleVisibleItems(prev => ({ ...prev, [action.payload.toggleType!]: !prev[action.payload.toggleType!] }));
           break;
         }
@@ -68,9 +69,9 @@ export const SideBar = ({
       {customFields.map(customInfo => (
         <CustomFieldContainer
           key={customInfo.id}
-          visibleItems={visibleItems[customInfo.type]}
+          areItemsVisible={visibleItems[customInfo.type]}
           containerType={customInfo.type}
-          customFields={customInfo.customField}
+          customField={customInfo.customField}
           onAction={_onAction}
           className="ml-1"
           overrides={{ removeOption: 'remove__option' }}

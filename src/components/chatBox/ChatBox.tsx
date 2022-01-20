@@ -6,7 +6,8 @@ import { ChatBoxFooter } from './chatBoxFooter/ChatBoxFooter';
 import { ChatBoxMessageContainer } from 'components/chatBox/chatBoxMessageContainer/ChatBoxMessageContainer';
 
 //types
-import { BaseActions, MessageStreamType, ALL_ACTIONS } from 'types';
+import { BaseActions, MessageStreamType } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 //constants
 import { DEFAULT_USER } from '../../constants';
@@ -19,34 +20,35 @@ import './ChatBox.css';
 
 export const ChatBox = ({
   id,
-  displayName,
   messageStreamConfig,
   onAction,
 }: {
   id: string;
-  displayName: string;
-  messageStreamConfig: MessageStreamType;
+  messageStreamConfig?: MessageStreamType;
   onAction: React.Dispatch<BaseActions>;
 }) => {
-  const sendMessageStream = useCallback(
+  const handleSendMessage = useCallback(
     (value: string) => {
       onAction({
-        type: ALL_ACTIONS.SEND_MESSAGE,
-        payload: { id: id, messageStreamData: [...messageStreamConfig.messageStreamData, value] },
+        type: ACTION_TYPES.SEND_MESSAGE,
+        payload: { id: id, message: value },
       });
     },
-    [messageStreamConfig, id, onAction]
+    [id, onAction]
   );
 
   const messageStream = useMemo(
-    () => getMessageData(messageStreamConfig.messageStreamData ?? []),
-    [messageStreamConfig.messageStreamData]
+    () => getMessageData(messageStreamConfig?.messageStreamData ?? []),
+    [messageStreamConfig]
   );
+
+  const displayName = messageStreamConfig?.name;
+
   return (
     <div className="chat-box">
-      <ChatBoxHeader disPlayName={displayName} Icon={messageStreamConfig.Icon} />
+      <ChatBoxHeader displayName={displayName} Icon={messageStreamConfig?.Icon} />
       <ChatBoxMessageContainer messageStream={messageStream} userName={DEFAULT_USER} />
-      {displayName ? <ChatBoxFooter sendMessageStream={sendMessageStream} disPlayName={displayName} /> : null}
+      {displayName ? <ChatBoxFooter handleSendMessage={handleSendMessage} displayName={displayName} /> : null}
     </div>
   );
 };

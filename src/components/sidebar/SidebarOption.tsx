@@ -1,5 +1,6 @@
 //types
-import { BaseActions, ModalAndToggleAction, IconType, ALL_ACTIONS } from 'types';
+import { BaseActions, ModalAndToggleAction, IconType } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 export const SidebarOption = ({
   onAction,
@@ -18,7 +19,7 @@ export const SidebarOption = ({
 }): React.ReactElement => {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     onAction?.({
-      type: ALL_ACTIONS.SELECT_OPTION,
+      type: ACTION_TYPES.SELECT_OPTION,
       payload: { id: id },
     });
   };
@@ -26,7 +27,7 @@ export const SidebarOption = ({
   const handleRemove = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
     e.stopPropagation();
     onAction?.({
-      type: ALL_ACTIONS.REMOVE,
+      type: ACTION_TYPES.REMOVE,
       payload: { id: id },
     });
   };

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
+
 //material-ui
 import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
-import React from 'react';
 
 export const HeaderRight = (): React.ReactElement => {
   const avatarSize = useMemo(() => ({ width: 30, height: 30 }), []);
