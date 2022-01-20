@@ -2,46 +2,46 @@ import { Reducer } from 'react';
 
 //types
 import { ReducerStateType, BaseActions } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 //material-ui
 import AppsIcon from '@mui/icons-material/Apps';
 
 //constants
-import { ALL_ACTIONS } from 'types';
 import { USER_PROFILE_COLLECTION } from 'components/imageContainer/ImageContainer';
 
-const ConfigTypeMap = {
+const CONFIG_TYPE_MAP = {
   CHANNEL: 'channel',
   APP: 'app',
   USER: 'user',
-};
+} as const;
 
 const reducer: Reducer<ReducerStateType, BaseActions> = (state, action) => {
   const payloadId = action.payload.id;
 
   switch (action.type) {
-    case ALL_ACTIONS.CREATE_CHANNEL: {
+    case ACTION_TYPES.CREATE_CHANNEL: {
       return {
         ...state,
         id: payloadId,
         messageStreamConfig: {
           ...state.messageStreamConfig,
           [payloadId]: {
-            ConfigType: ConfigTypeMap.CHANNEL,
+            ConfigType: CONFIG_TYPE_MAP.CHANNEL,
             name: action.payload.name,
             messageStreamData: [],
           },
         },
       };
     }
-    case ALL_ACTIONS.CREATE_USER: {
+    case ACTION_TYPES.CREATE_USER: {
       return {
         ...state,
         id: payloadId,
         messageStreamConfig: {
           ...state.messageStreamConfig,
           [payloadId]: {
-            ConfigType: ConfigTypeMap.USER,
+            ConfigType: CONFIG_TYPE_MAP.USER,
             name: action.payload.name,
             messageStreamData: [],
             Icon: USER_PROFILE_COLLECTION[Math.floor(Math.random() * 10) % 3],
@@ -50,14 +50,14 @@ const reducer: Reducer<ReducerStateType, BaseActions> = (state, action) => {
       };
     }
 
-    case ALL_ACTIONS.CREATE_APP: {
+    case ACTION_TYPES.CREATE_APP: {
       return {
         ...state,
         id: payloadId,
         messageStreamConfig: {
           ...state.messageStreamConfig,
           [payloadId]: {
-            ConfigType: ConfigTypeMap.APP,
+            ConfigType: CONFIG_TYPE_MAP.APP,
             name: action.payload.name,
             messageStreamData: [],
             Icon: AppsIcon,
@@ -66,14 +66,14 @@ const reducer: Reducer<ReducerStateType, BaseActions> = (state, action) => {
       };
     }
 
-    case ALL_ACTIONS.SELECT_OPTION: {
+    case ACTION_TYPES.SELECT_OPTION: {
       return {
         ...state,
         id: payloadId,
       };
     }
 
-    case ALL_ACTIONS.SEND_MESSAGE: {
+    case ACTION_TYPES.SEND_MESSAGE: {
       return {
         ...state,
         id: payloadId,
@@ -81,13 +81,13 @@ const reducer: Reducer<ReducerStateType, BaseActions> = (state, action) => {
           ...state.messageStreamConfig,
           [payloadId]: {
             ...state.messageStreamConfig[payloadId],
-            messageStreamData: action.payload.messageStreamData ?? [],
+            messageStreamData: [...state.messageStreamConfig[payloadId].messageStreamData, action.payload.message],
           },
         },
       };
     }
 
-    case ALL_ACTIONS.REMOVE: {
+    case ACTION_TYPES.REMOVE: {
       const filteredMessageStreamConfig = Object.keys(state.messageStreamConfig)
         .filter(key => key !== payloadId)
         .reduce((acc, key) => {

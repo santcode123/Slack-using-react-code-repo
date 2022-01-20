@@ -8,7 +8,8 @@ import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 
 //types
-import { CustomType, BaseActions, ModalAndToggleAction, ALL_ACTIONS } from 'types';
+import { CustomType, BaseActions, ModalAndToggleAction } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 const CUSTOM_FIELD_HEADER_TITLE = {
   channel: 'Channels',
@@ -18,16 +19,16 @@ const CUSTOM_FIELD_HEADER_TITLE = {
 
 export const CustomFieldHeader = ({
   headerType,
-  visibleItems,
+  areItemsVisible,
   onAction,
 }: {
   headerType: CustomType;
-  visibleItems: boolean;
+  areItemsVisible: boolean;
   onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
 }): React.ReactElement => {
   const handleToggle = useCallback(() => {
     onAction({
-      type: ALL_ACTIONS.TOGGLE_ACTION,
+      type: ACTION_TYPES.TOGGLE_ACTION,
       payload: {
         toggleType: headerType,
       },
@@ -36,7 +37,7 @@ export const CustomFieldHeader = ({
 
   return (
     <div className="customField__header">
-      <div onClick={handleToggle}>{visibleItems ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
+      <div onClick={handleToggle}>{areItemsVisible ? <ExpandMoreIcon /> : <ExpandLessIcon />}</div>
       <h2>{CUSTOM_FIELD_HEADER_TITLE[headerType]}</h2>
       <div className="customField__header__option">
         <Tooltip title="Section options" arrow>

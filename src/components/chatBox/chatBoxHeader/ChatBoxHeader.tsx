@@ -5,13 +5,19 @@ import { ChatBoxHeaderRight } from 'components/chatBox/chatBoxHeader/ChatBoxHead
 //types
 import { IconType } from 'types';
 
-export const ChatBoxHeader = ({ disPlayName, Icon }: { disPlayName: string; Icon?: React.ReactElement | IconType }) => {
-  const headerTitle = <ChatBoxUserProfile disPlayName={disPlayName} Icon={Icon} />;
+export const ChatBoxHeader = ({
+  displayName = '',
+  Icon,
+}: {
+  displayName?: string;
+  Icon?: React.ReactElement | IconType;
+}) => {
+  const headerTitle = <ChatBoxUserProfile displayName={displayName} Icon={Icon} />;
 
   return (
     <div className="chat_header">
       <div className="chat_header_title">{headerTitle}</div>
-      {Icon || !disPlayName ? null : <ChatBoxHeaderRight />}
+      {Icon || !displayName ? null : <ChatBoxHeaderRight />}
     </div>
   );
 };

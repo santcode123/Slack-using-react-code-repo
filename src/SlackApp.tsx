@@ -22,25 +22,18 @@ const initialState = {
 export const SlackApp = (): React.ReactElement => {
   const [slackState, dispatch] = useReducer(reducer, initialState);
 
-  const id = slackState.id ?? '';
-  const channels = useMemo(
-    () => objectFilter(slackState.messageStreamConfig, CHANNEL),
-    [slackState.messageStreamConfig]
-  );
-  const apps = useMemo(() => objectFilter(slackState.messageStreamConfig, APP), [slackState.messageStreamConfig]);
-  const users = useMemo(() => objectFilter(slackState.messageStreamConfig, USER), [slackState.messageStreamConfig]);
+  const { id = '', messageStreamConfig } = slackState;
+
+  const channels = useMemo(() => objectFilter(messageStreamConfig, CHANNEL), [messageStreamConfig]);
+  const apps = useMemo(() => objectFilter(messageStreamConfig, APP), [messageStreamConfig]);
+  const users = useMemo(() => objectFilter(messageStreamConfig, USER), [messageStreamConfig]);
 
   return (
     <>
       <Header />
       <div className="slack__body">
         <SideBar onAction={dispatch} channels={channels} users={users} apps={apps} />
-        <ChatBox
-          id={id}
-          displayName={slackState.messageStreamConfig[id]?.name ?? ''}
-          messageStreamConfig={slackState.messageStreamConfig[id] ?? {}}
-          onAction={dispatch}
-        />
+        <ChatBox id={id} messageStreamConfig={messageStreamConfig[id]} onAction={dispatch} />
       </div>
     </>
   );

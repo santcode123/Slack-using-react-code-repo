@@ -1,8 +1,9 @@
 //types
-import { MessageStreamType, MessageStreamConfigType, ALL_ACTIONS } from 'types';
+import { MessageStreamType, MessageStreamConfigType } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 //constants
-import { APP, CHANNEL } from './constants';
+import { APP, CHANNEL, MODAL_TYPES } from './constants';
 
 export function getCurrentTime(): string {
   const currentTime = new Date();
@@ -29,17 +30,17 @@ export const getMessageData = (messageStreamData: string[]): Array<{ id: string;
   messageStreamData.map((message, index) => ({ id: index.toString(), message: message }));
 
 export const getActionType = (
-  modalType: string | undefined
-): ALL_ACTIONS.CREATE_APP | ALL_ACTIONS.CREATE_CHANNEL | ALL_ACTIONS.CREATE_USER => {
+  modalType: typeof MODAL_TYPES[keyof typeof MODAL_TYPES]
+): ACTION_TYPES.CREATE_APP | ACTION_TYPES.CREATE_CHANNEL | ACTION_TYPES.CREATE_USER => {
   switch (modalType) {
     case CHANNEL: {
-      return ALL_ACTIONS.CREATE_CHANNEL;
+      return ACTION_TYPES.CREATE_CHANNEL;
     }
     case APP: {
-      return ALL_ACTIONS.CREATE_APP;
+      return ACTION_TYPES.CREATE_APP;
     }
     default: {
-      return ALL_ACTIONS.CREATE_USER;
+      return ACTION_TYPES.CREATE_USER;
     }
   }
 };

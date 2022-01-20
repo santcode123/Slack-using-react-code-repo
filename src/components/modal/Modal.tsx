@@ -6,24 +6,28 @@ import { ModalHeader } from './ModalHeader';
 import { ModalFooter } from './ModalFooter';
 
 //types
-import { BaseActions, ALL_ACTIONS, ModalAndToggleAction } from 'types';
+import { BaseActions, ModalAndToggleAction } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 //helper
 import { getActionType } from 'helper';
 
+//constants
+import { MODAL_TYPES } from '../../constants';
+
 //style
 import './Modal.css';
 
-const MODAL_TYPE_NAME_MAP: { [name: string]: string } = {
-  channel: 'Channel name',
-  app: 'App name',
-  user: 'User name',
+const MODAL_TYPE_NAME_MAP: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
+  [MODAL_TYPES.CHANNEL]: 'Channel name',
+  [MODAL_TYPES.APP]: 'App name',
+  [MODAL_TYPES.USER]: 'User name',
 };
 
 const MODAL_INPUT_PLACEHOLDER: { [name: string]: string } = {
-  channel: 'Enter a channel name',
-  app: 'Enter app name',
-  user: 'Enter a username',
+  [MODAL_TYPES.CHANNEL]: 'Enter a channel name',
+  [MODAL_TYPES.APP]: 'Enter app name',
+  [MODAL_TYPES.USER]: 'Enter a username',
 };
 
 export const Modal = ({
@@ -31,18 +35,18 @@ export const Modal = ({
   modalType,
 }: {
   onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
-  modalType?: string;
+  modalType: typeof MODAL_TYPES[keyof typeof MODAL_TYPES];
 }) => {
   const [value, setValue] = useState<string>();
   const overlayRef = useRef(null);
 
-  const handleChanges = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   }, []);
 
   const handleClose = useCallback(() => {
     onAction({
-      type: ALL_ACTIONS.MODAL_ACTION,
+      type: ACTION_TYPES.MODAL_ACTION,
       payload: { modalType: undefined },
     });
   }, [onAction]);
@@ -74,14 +78,9 @@ export const Modal = ({
         <div className="modal__body">
           <form onSubmit={handleSubmit}>
             <label>
-              <p>{MODAL_TYPE_NAME_MAP[modalType ?? '']}</p>
+              <p>{MODAL_TYPE_NAME_MAP[modalType]}</p>
             </label>
-            <input
-              type="text"
-              value={value}
-              onChange={handleChanges}
-              placeholder={MODAL_INPUT_PLACEHOLDER[modalType ?? '']}
-            />
+            <input type="text" value={value} onChange={handleChange} placeholder={MODAL_INPUT_PLACEHOLDER[modalType]} />
           </form>
         </div>
         <ModalFooter modalType={modalType} handleSubmit={handleSubmit} />

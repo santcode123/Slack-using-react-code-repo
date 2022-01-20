@@ -7,15 +7,15 @@ import { CustomFieldFooter } from './CustomFieldFooter';
 import { ChannelType, UserType, AppType, BaseActions, CustomType, ModalAndToggleAction } from 'types';
 
 export const CustomFieldContainer = ({
-  visibleItems,
-  customFields,
+  areItemsVisible,
+  customField,
   onAction,
   containerType,
   className,
   overrides,
 }: {
-  visibleItems: boolean;
-  customFields: ChannelType | UserType | AppType;
+  areItemsVisible: boolean;
+  customField: ChannelType | UserType | AppType;
   onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
   containerType: CustomType;
   className?: string;
@@ -23,15 +23,15 @@ export const CustomFieldContainer = ({
 }) => {
   return (
     <div className="container">
-      <CustomFieldHeader headerType={containerType} visibleItems={visibleItems} onAction={onAction} />
-      {visibleItems
-        ? Object.entries(customFields).map(data => (
+      <CustomFieldHeader headerType={containerType} areItemsVisible={areItemsVisible} onAction={onAction} />
+      {areItemsVisible
+        ? Object.entries(customField).map(data => (
             <SidebarOption
               key={data[0]}
               onAction={onAction}
               id={data[0]}
-              title={data[1]?.name}
-              Icon={data[1]?.Icon}
+              title={data[1].name}
+              Icon={data[1].Icon}
               className={className}
               overrides={overrides}
             />

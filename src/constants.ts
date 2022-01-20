@@ -25,3 +25,9 @@ export const SIDEBAR_FIXED_ICONS = [
   { id: DRAFTS, Icon: DraftsIcon, title: 'Drafts' },
   { id: MORE, Icon: MoreVertIcon, title: 'More' },
 ];
+
+export const MODAL_TYPES = {
+  APP: 'app',
+  CHANNEL: 'channel',
+  USER: 'user',
+} as const;

@@ -7,7 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { SidebarOption } from 'components/sidebar/SidebarOption';
 
 //types
-import { CustomType, BaseActions, ModalAndToggleAction, ALL_ACTIONS } from 'types';
+import { CustomType, BaseActions, ModalAndToggleAction } from 'types';
+import { ACTION_TYPES } from 'actionTypes';
 
 export const CustomFieldFooter = ({
   footerType,
@@ -18,7 +19,7 @@ export const CustomFieldFooter = ({
 }): React.ReactElement => {
   const handleClick = useCallback(() => {
     onAction({
-      type: ALL_ACTIONS.MODAL_ACTION,
+      type: ACTION_TYPES.MODAL_ACTION,
       payload: {
         modalType: footerType,
       },

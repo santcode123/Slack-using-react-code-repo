@@ -4,21 +4,11 @@ import SvgIconTypeMap from '@mui/styled-engine-sc';
 
 //constants
 import { APP, CHANNEL, USER } from './constants';
+import { ACTION_TYPES } from 'actionTypes';
 
 export type IconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
   muiName: string;
 };
-
-export enum ALL_ACTIONS {
-  CREATE_CHANNEL = 'createChannel',
-  CREATE_USER = 'createUser',
-  CREATE_APP = 'createApp',
-  SELECT_OPTION = 'selectOption',
-  SEND_MESSAGE = 'sendMessage',
-  REMOVE = 'remove',
-  MODAL_ACTION = 'modalAction',
-  TOGGLE_ACTION = 'toggleAction',
-}
 
 export type MessageStreamType = {
   ConfigType: string;
@@ -48,16 +38,16 @@ export interface AppType {
 }
 
 type CreateAction = {
-  type: typeof ALL_ACTIONS.CREATE_APP | ALL_ACTIONS.CREATE_CHANNEL | ALL_ACTIONS.CREATE_USER;
+  type: typeof ACTION_TYPES.CREATE_APP | typeof ACTION_TYPES.CREATE_CHANNEL | typeof ACTION_TYPES.CREATE_USER;
   payload: { id: string; name: string };
 };
 type SelectAndRemoveAction = {
-  type: typeof ALL_ACTIONS.SELECT_OPTION | ALL_ACTIONS.REMOVE;
+  type: typeof ACTION_TYPES.SELECT_OPTION | ACTION_TYPES.REMOVE;
   payload: { id: string };
 };
 type MessageStreamAction = {
-  type: typeof ALL_ACTIONS.SEND_MESSAGE;
-  payload: { id: string; messageStreamData: string[] };
+  type: typeof ACTION_TYPES.SEND_MESSAGE;
+  payload: { id: string; message: string };
 };
 
 export type BaseActions = CreateAction | SelectAndRemoveAction | MessageStreamAction;
