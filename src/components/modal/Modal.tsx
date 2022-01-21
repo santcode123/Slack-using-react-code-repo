@@ -18,24 +18,20 @@ import { MODAL_TYPES } from '../../constants';
 //style
 import './Modal.css';
 
-const MODAL_TYPE_NAME_MAP: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
-  [MODAL_TYPES.CHANNEL]: 'Channel name',
-  [MODAL_TYPES.APP]: 'App name',
-  [MODAL_TYPES.USER]: 'User name',
-};
-
-const MODAL_INPUT_PLACEHOLDER: { [name: string]: string } = {
-  [MODAL_TYPES.CHANNEL]: 'Enter a channel name',
-  [MODAL_TYPES.APP]: 'Enter app name',
-  [MODAL_TYPES.USER]: 'Enter a username',
-};
-
 export const Modal = ({
   onAction,
   modalType,
+  headerTitle,
+  footerTitle,
+  inputPlaceHolder,
+  modalBodyName,
 }: {
   onAction: React.Dispatch<BaseActions | ModalAndToggleAction>;
   modalType: typeof MODAL_TYPES[keyof typeof MODAL_TYPES];
+  headerTitle?: string;
+  footerTitle?: string;
+  inputPlaceHolder?: string;
+  modalBodyName?: string;
 }) => {
   const [value, setValue] = useState<string>();
   const overlayRef = useRef(null);
@@ -74,16 +70,16 @@ export const Modal = ({
   return ReactDOM.createPortal(
     <div ref={overlayRef} className="overlay" onClick={handleClick}>
       <div className="modal">
-        <ModalHeader close={handleClose} modalType={modalType} />
+        <ModalHeader close={handleClose} title={headerTitle} />
         <div className="modal__body">
           <form onSubmit={handleSubmit}>
             <label>
-              <p>{MODAL_TYPE_NAME_MAP[modalType]}</p>
+              <p>{modalBodyName}</p>
             </label>
-            <input type="text" value={value} onChange={handleChange} placeholder={MODAL_INPUT_PLACEHOLDER[modalType]} />
+            <input type="text" value={value} onChange={handleChange} placeholder={inputPlaceHolder} />
           </form>
         </div>
-        <ModalFooter modalType={modalType} handleSubmit={handleSubmit} />
+        <ModalFooter handleSubmit={handleSubmit} title={footerTitle} />
       </div>
     </div>,
     document.getElementById('modal')!

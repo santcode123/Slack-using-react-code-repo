@@ -31,3 +31,27 @@ export const MODAL_TYPES = {
   CHANNEL: 'channel',
   USER: 'user',
 } as const;
+
+export const MODAL_INPUT_PLACEHOLDER: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
+  [MODAL_TYPES.CHANNEL]: 'Enter a channel name',
+  [MODAL_TYPES.APP]: 'Enter app name',
+  [MODAL_TYPES.USER]: 'Enter a username',
+};
+
+export const MODAL_SUBMIT_BUTTON_TEXT: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
+  [MODAL_TYPES.USER]: 'Create personal chat',
+  [MODAL_TYPES.CHANNEL]: 'Create a channel',
+  [MODAL_TYPES.APP]: 'Create a app',
+};
+
+export const MODAL_HEADER_TITLE: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
+  [MODAL_TYPES.USER]: 'Start a new personal chat',
+  [MODAL_TYPES.CHANNEL]: 'Create a new channel',
+  [MODAL_TYPES.APP]: 'Create a new app',
+};
+
+export const MODAL_TYPE_NAME_MAP: { [name in typeof MODAL_TYPES[keyof typeof MODAL_TYPES]]: string } = {
+  [MODAL_TYPES.CHANNEL]: 'Channel name',
+  [MODAL_TYPES.APP]: 'App name',
+  [MODAL_TYPES.USER]: 'User name',
+};
