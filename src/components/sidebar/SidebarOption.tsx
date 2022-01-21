@@ -27,7 +27,7 @@ export const SidebarOption = ({
   const handleRemove = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
     e.stopPropagation();
     onAction?.({
-      type: ACTION_TYPES.REMOVE,
+      type: ACTION_TYPES.REMOVE_SIDEBAR_OPTION,
       payload: { id: id },
     });
   };

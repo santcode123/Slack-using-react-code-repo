@@ -42,7 +42,7 @@ type CreateAction = {
   payload: { id: string; name: string };
 };
 type SelectAndRemoveAction = {
-  type: typeof ACTION_TYPES.SELECT_OPTION | ACTION_TYPES.REMOVE;
+  type: typeof ACTION_TYPES.SELECT_OPTION | ACTION_TYPES.REMOVE_SIDEBAR_OPTION;
   payload: { id: string };
 };
 type MessageStreamAction = {

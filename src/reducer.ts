@@ -87,7 +87,7 @@ const reducer: Reducer<ReducerStateType, BaseActions> = (state, action) => {
       };
     }
 
-    case ACTION_TYPES.REMOVE: {
+    case ACTION_TYPES.REMOVE_SIDEBAR_OPTION: {
       const filteredMessageStreamConfig = Object.keys(state.messageStreamConfig)
         .filter(key => key !== payloadId)
         .reduce((acc, key) => {
