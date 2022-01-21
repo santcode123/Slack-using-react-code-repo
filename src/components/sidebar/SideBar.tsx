@@ -11,7 +11,17 @@ import { ChannelType, UserType, AppType, BaseActions, CustomFieldType, ModalAndT
 import { ACTION_TYPES } from 'actionTypes';
 
 //constants
-import { SIDEBAR_FIXED_ICONS, CHANNEL, USER, APP, MODAL_TYPES } from '../../constants';
+import {
+  SIDEBAR_FIXED_ICONS,
+  CHANNEL,
+  USER,
+  APP,
+  MODAL_TYPES,
+  MODAL_HEADER_TITLE,
+  MODAL_INPUT_PLACEHOLDER,
+  MODAL_SUBMIT_BUTTON_TEXT,
+  MODAL_TYPE_NAME_MAP,
+} from '../../constants';
 
 //style
 import './SideBar.css';
@@ -65,7 +75,16 @@ export const SideBar = ({
           <SidebarOption key={customField.id} Icon={customField.Icon} title={customField.title} id={customField.id} />
         ))}
       </div>
-      {modalType ? <Modal onAction={_onAction} modalType={modalType} /> : null}
+      {modalType ? (
+        <Modal
+          onAction={_onAction}
+          modalType={modalType}
+          headerTitle={MODAL_HEADER_TITLE[modalType]}
+          footerTitle={MODAL_SUBMIT_BUTTON_TEXT[modalType]}
+          inputPlaceHolder={MODAL_INPUT_PLACEHOLDER[modalType]}
+          modalBodyName={MODAL_TYPE_NAME_MAP[modalType]}
+        />
+      ) : null}
       {customFields.map(customInfo => (
         <CustomFieldContainer
           key={customInfo.id}
