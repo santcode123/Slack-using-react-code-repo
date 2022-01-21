@@ -10,7 +10,7 @@ export const ChatBoxUserProfile = ({
   Icon,
 }: {
   displayName: string;
-  Icon?: IconType;
+  Icon?: (() => React.ReactElement) | IconType;
 }): React.ReactElement => {
   const channelPrefix = displayName ? '#' : '';
   return (

@@ -39,7 +39,7 @@ export const ChatBox = ({
 
   const messageStream = useMemo(
     () => getMessageData(messageStreamConfig?.messageStreamData ?? []),
-    [messageStreamConfig]
+    [messageStreamConfig?.messageStreamData]
   );
 
   const displayName = messageStreamConfig?.name;

@@ -10,7 +10,7 @@ export const ChatBoxHeader = ({
   Icon,
 }: {
   displayName?: string;
-  Icon?: React.ReactElement | IconType;
+  Icon: (() => React.ReactElement) | IconType;
 }) => {
   const headerTitle = <ChatBoxUserProfile displayName={displayName} Icon={Icon} />;
 
